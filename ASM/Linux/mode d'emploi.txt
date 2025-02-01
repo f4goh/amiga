@@ -1,0 +1,150 @@
+Étape 1 : Créer un script shell
+Créez un fichier appelé asm dans votre répertoire ~/amiga/ASM/linux et assurez-vous qu'il est exécutable.
+
+
+nano ~/amiga/ASM/Linux/asm
+Ajoutez le contenu suivant au fichier :
+
+
+#!/bin/bash
+
+# Répertoire contenant vasmm68k_mot et vlink
+TOOLS_DIR=~/amiga/ASM/Linux
+
+# Vérifiez si un argument est passé
+if [ "$#" -ne 1 ]; then
+    echo "Usage: asm <nom_fichier.s>"
+    exit 1
+fi
+
+# Nom du fichier source et sortie
+SOURCE_FILE="$1"
+BASE_NAME=$(basename "$SOURCE_FILE" .s)
+
+# Vérifiez si le fichier source existe
+if [ ! -f "$SOURCE_FILE" ]; then
+    echo "Erreur : fichier source '$SOURCE_FILE' introuvable."
+    exit 2
+fi
+
+# Exécuter l'assemblage
+$TOOLS_DIR/vasmm68k_mot -m68000 -Fhunk -linedebug -devpac -o "$BASE_NAME.o" "$SOURCE_FILE"
+if [ $? -ne 0 ]; then
+    echo "Erreur lors de l'assemblage avec vasmm68k_mot."
+    exit 3
+fi
+
+# Lier le fichier objet
+$TOOLS_DIR/vlink -bamigahunk -Bstatic -o "$BASE_NAME" "$BASE_NAME.o"
+if [ $? -ne 0 ]; then
+    echo "Erreur lors du lien avec vlink."
+    exit 4
+fi
+
+echo "Compilation réussie : $BASE_NAME.o et $BASE_NAME générés."
+Enregistrez le fichier et quittez l'éditeur.
+
+Étape 2 : Rendre le script exécutable
+Rendez le script exécutable en utilisant la commande suivante :
+
+
+chmod +x ~/amiga/ASM/Linux/asm
+Étape 3 : Ajouter le répertoire au PATH
+Ajoutez le répertoire ~/amiga/ASM/linux à votre variable PATH pour pouvoir exécuter le script de n'importe où.
+
+Ajoutez cette ligne à la fin de votre fichier ~/.bashrc (ou ~/.zshrc si vous utilisez Zsh) :
+
+
+export PATH=~/amiga/ASM/Linux:$PATH
+Rechargez votre fichier de configuration :
+
+
+source ~/.bashrc
+Étape 4 : Utilisation
+Placez-vous dans le répertoire contenant vos fichiers source, par exemple :
+
+
+cd ~/amiga/ASM/Source/disk01
+Et exécutez la commande suivante :
+
+
+asm nomfic.s
+Cela générera les fichiers nomfic.o et nomfic.
+
+-----------------------
+windows
+
+Étape 1 : Créer le script batch
+Créez un fichier nommé asm.bat dans le répertoire C:\Users\<VotreNom>\amiga\ASM\Windows.
+
+Ouvrez un éditeur de texte (par exemple, le Bloc-notes).
+Collez le script suivant :
+
+@echo off
+REM Répertoire contenant vasmm68k_mot et vlink
+set TOOLS_DIR=C:\Users\<VotreNom>\amiga\ASM\Windows
+
+REM Vérifiez si un argument est passé
+if "%~1"=="" (
+    echo Usage: asm nom_fichier.s
+    exit /b 1
+)
+
+REM Nom du fichier source et sortie
+set SOURCE_FILE=%~1
+set BASE_NAME=%~n1
+
+REM Vérifiez si le fichier source existe
+if not exist "%SOURCE_FILE%" (
+    echo Erreur : fichier source "%SOURCE_FILE%" introuvable.
+    exit /b 2
+)
+
+REM Exécuter l'assemblage
+"%TOOLS_DIR%\vasmm68k_mot.exe" -m68000 -Fhunk -linedebug -devpac -o "%BASE_NAME%.o" "%SOURCE_FILE%"
+if %errorlevel% neq 0 (
+    echo Erreur lors de l'assemblage avec vasmm68k_mot.
+    exit /b 3
+)
+
+REM Lier le fichier objet
+"%TOOLS_DIR%\vlink.exe" -bamigahunk -Bstatic -o "%BASE_NAME%" "%BASE_NAME%.o"
+if %errorlevel% neq 0 (
+    echo Erreur lors du lien avec vlink.
+    exit /b 4
+)
+
+echo Compilation reussie : %BASE_NAME%.o et %BASE_NAME% generes.
+
+Remplacez <VotreNom> par votre nom d’utilisateur Windows.
+Enregistrez le fichier sous le nom asm.bat dans le répertoire C:\Users\<VotreNom>\amiga\ASM\Windows.
+Étape 2 : Ajouter le répertoire au PATH
+Ajoutez le répertoire contenant le script asm.bat au PATH de Windows pour pouvoir l’exécuter de n’importe où.
+
+Appuyez sur Win + S et tapez "Variables d'environnement", puis cliquez sur "Modifier les variables d'environnement système".
+Dans la fenêtre, cliquez sur "Variables d'environnement...".
+Dans la section Variables système, trouvez et sélectionnez la variable Path, puis cliquez sur Modifier....
+Cliquez sur Nouveau, et ajoutez le chemin suivant (remplacez <VotreNom> par votre nom d'utilisateur) :
+
+
+C:\Users\<VotreNom>\amiga\ASM\Windows
+Cliquez sur OK pour valider les modifications.
+Étape 3 : Utilisation
+Placez-vous dans le répertoire contenant vos fichiers source, par exemple :
+
+
+cd C:\Users\<VotreNom>\amiga\ASM\Source\disk01
+Exécutez la commande suivante :
+
+
+asm nomfic.s
+Cela générera les fichiers nomfic.o et nomfic.
+
+Résultat attendu
+Le fichier objet (nomfic.o) sera généré dans le répertoire courant.
+L'exécutable final (nomfic) sera créé.
+Vous n’aurez plus besoin de copier vasmm68k_mot.exe et vlink.exe dans vos répertoires de code source. Tout est centralisé.
+
+68K_Assembly_byAmix73.xml 
+notepad++
+
