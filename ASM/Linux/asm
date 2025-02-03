@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Répertoire contenant vasmm68k_mot et vlink
+TOOLS_DIR=~/amiga/ASM/Linux
+
+# Vérifiez si un argument est passé
+if [ "$#" -ne 1 ]; then
+    echo "Usage: asm <nom_fichier.s>"
+    exit 1
+fi
+
+# Nom du fichier source et sortie
+SOURCE_FILE="$1"
+BASE_NAME=$(basename "$SOURCE_FILE" .s)
+
+# Vérifiez si le fichier source existe
+if [ ! -f "$SOURCE_FILE" ]; then
+    echo "Erreur : fichier source '$SOURCE_FILE' introuvable."
+    exit 2
+fi
+
+# Exécuter l'assemblage
+$TOOLS_DIR/vasmm68k_mot -m68000 -Fhunk -linedebug -devpac -o "$BASE_NAME.o" "$SOURCE_FILE"
+if [ $? -ne 0 ]; then
+    echo "Erreur lors de l'assemblage avec vasmm68k_mot."
+    exit 3
+fi
+
+# Lier le fichier objet
+$TOOLS_DIR/vlink -bamigahunk -Bstatic -o "$BASE_NAME" "$BASE_NAME.o"
+if [ $? -ne 0 ]; then
+    echo "Erreur lors du lien avec vlink."
+    exit 4
+fi
+
+echo "Compilation réussie : $BASE_NAME.o et $BASE_NAME générés."
+
+

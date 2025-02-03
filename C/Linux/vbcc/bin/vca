@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Configuration des chemins nécessaires
+export VBCC=$HOME/amiga/C/Linux/vbcc
+export PATH="$PATH:$HOME/amiga/C/Linux/vbcc/bin"
+export NDK_INC="$VBCC/NDK_1.3/Includes1.3/include.h"
+
+
+# Vérifier si un fichier source est fourni
+if [ "$#" -lt 1 ]; then
+    echo "Usage: vcm <nom_fichier.c>"
+    exit 1
+fi
+
+# Récupération du nom du fichier source et de base
+SOURCE_FILE="$1"
+BASE_NAME=$(basename "$SOURCE_FILE" .c)
+
+# Vérification de l'existence du fichier source
+if [ ! -f "$SOURCE_FILE" ]; then
+    echo "Erreur : fichier source '$SOURCE_FILE' introuvable."
+    exit 2
+fi
+
+
+# Compilation avec vc
+vc -I${NDK_INC} -c99 +kick13 "$SOURCE_FILE"
+if [ $? -ne 0 ]; then
+    echo "Erreur lors de la compilation avec vc."
+    exit 3
+fi
+
+mv a.out $BASE_NAME
+
+echo "Compilation réussie : exécutable $BASE_NAME généré."
+
