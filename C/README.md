@@ -22,7 +22,8 @@ Save ctrl+o , ctrl+x
 reload 
 ```console
 source ~/.bashrc
-```console
+```
+
 go into any c source directory
 
 ```console
