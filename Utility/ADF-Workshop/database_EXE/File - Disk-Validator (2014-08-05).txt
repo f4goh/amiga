@@ -1,0 +1,5 @@
+  1848;3AB8742D;Virus;Root Formatter (disk-validator)
+  1848;AD2C6C6A;Virus;Loop Combo (disk-validator)
+  1848;6FE94E8C;Legitimate;Standard disk-validator
+  1848;77E3548A;Legitimate;TrackmoDOS v1.0 (disk-validator)
+  1848;A1ED7A82;Legitimate;Zine (disk-validator)

@@ -1,0 +1,88 @@
+   672;B367097B;Trojan;Susi Drive Stepper [packed]
+   876;B23DFCE6;Trojan;Happy New Year 96 Installer 3
+   904;CAA86099;Trojan;Susi Drive Stepper
+   912;7A2F7CC6;Trojan;Happy New Year 96 Optimized Installer
+   936;EF5C3460;Trojan;TimeBomber Final
+  1056;EEA3BF87;Trojan;KUK Crew (ABlank11) [packed]
+  1064;9FE41F27;Trojan;BootX Killer BB Installer
+  1224;E3EC7D48;Trojan;BBS NoGuru v2.0
+  1352;18069170;Trojan;KUK Crew (ABlank11)
+  1440;1311F132;Trojan;Virus Slayer v1.0 (The Band) BB Installer
+  1512;3C6B991D;Trojan;Byte Bandit 1 BB Installer
+  1512;90EA03E2;Trojan;Lamer Exterminator $00D BB Installer
+  1880;27E94911;Trojan;LameBlame [Cheater Hijacker] (Virus Terminator v6.0)
+  2004;77D07BE3;Trojan;NorthStar VirusKiller v1.6 BB Installer
+  2008;2DF7CB3C;Trojan;SCA BB Installer (Install)
+  2196;1AABA4CC;Trojan;Turk v1.3 BB Installer (Color Demo)
+  2220;6C9EBF03;Trojan;Ultimate Virus Hunter v1.4 BB Installer
+  2260;39547C27;Trojan;BBS Mongo Mania (ATX_NADA)
+  2260;E676C69A;Trojan;BBS Mongo Mania (MST-HCTR)
+  2576;0E6D2FDE;Trojan;Biomechanic - Variant A (HD Install)
+  2948;C25EF117;Trojan;Biomechanic - Joker 1 (Condom v1.50)
+  3176;B312E00E;Trojan;Biomechanic - Variant H (Orb 95)
+  3264;0C3D5C29;Trojan;Biomechanic 6 - Variant D (Flake Killer)
+  3368;C431760A;Trojan;BBS Mongo Mania (FLT_DSQ)
+  4172;7CB38641;Trojan;Lamer Exterminator $00D BB Installer (LoadWB)
+  4428;CBD4946A;Trojan;Biomechanic 5 - Variant G (Markus Schmall)
+  4568;60FDE9DB;Trojan;Disaster Master 2 Installer (Little Intro-Maker v1.00) [packed]
+  4676;2C6CBF84;Trojan;The Smily Cancer II Installer (LoadWB)
+  4764;F1D11B3C;Trojan;BBS ZAPA Adder (DM-Trash)
+  4776;16044E18;Trojan;Biomechanic 1 - Variant B (Sensible Golf HD Install)
+  4792;7962B329;Trojan;Phantom Installer (SuperNovaKiller v3.05)
+  5512;CCF5B0B4;Trojan;Biomechanic 1 - Variant B (Mortal Kombat II HD Install)
+  5608;7F2F6851;Trojan;BlueBox Installer (Operators Nightmare) [packed]
+  5912;912E8146;Trojan;Biomechanic 1 - Variant B (Virocop HD Install)
+  6232;01CBBFB9;Trojan;SCA [DAG] BB Installer
+  6232;5FD0C6F6;Trojan;SCA [DAG] BB Installer
+  6496;5C8D44DC;Trojan;Digital Dream BB Installer (Jeff-Viruskiller v2.67)
+  6764;A99480A0;Trojan;Biomechanic 1 - Variant B (Embryo HD Install)
+  7100;C1F275CD;Trojan;Eleni v1.0 Installer (MessAngel Killer)
+  7612;3F806418;Trojan;BBS Blieb6 (Blue Box Pro)
+  7636;14463436;Trojan;BBS ZAPA Adder (DM-Trash) [unpacked]
+  7840;70825270;Trojan;TimeBomber v0.9
+  8116;DD75D980;Trojan;FileGhost 1 Installer (HardSpeeder)
+  8240;96E8E01C;Trojan;Some virus BB Installer (Kongomans BootFighter v1)
+  8584;748729CA;Trojan;Biomechanic 7 - Variant C (TMembers)
+  9064;DF72339A;Trojan;Butonic Jeff v3.10 Installer (Jeff Viruskiller v1.0)
+  9352;1AD776D3;Trojan;BlueBox Installer (Operators Nightmare)
+  9588;39A528CA;Trojan;Biomechanic 1 - Variant B (SWOS HD Install)
+  9724;5A9A4E7E;Trojan;G-Zus [packed]
+  9940;10DA4523;Trojan;Blizzard v1.0 BB Installer (Blizzard Protector v1.0)
+ 10280;DD949D06;Trojan;Blizzard v1.0 BB Installer (Blizzard Protector v1.0)
+ 10608;2D051567;Trojan;G-Zus [packed]
+ 10624;8DA01B6F;Trojan;Disaster Master 2 Installer (Little Intro-Maker v1.00)
+ 11312;9798C669;Trojan;BBS Fanta Connect 2001 (SnoopDos v1.6 Fake)
+ 12836;9D47E734;Trojan;Blizzard v1.0 BB Installer (Blizzard Protector v1.0)
+ 13340;00C7A2CB;Trojan;Blizzard v1.0 BB Installer (Blizzard Protector v1.0)
+ 14888;8BD7E8B0;Trojan;G-Zus
+ 17024;B5ACD8B3;Trojan;BBS Why 2 (White Box v1.0)
+ 17072;61F08880;Trojan;Blizzard v1.0 BB Installer (Blizzard Protector v1.0)
+ 20364;7DDE1F86;Trojan;BBS Why 1 (Module Master v1.7)
+ 21640;686281E7;Trojan;X-Ripper v1.1 [packed]
+ 21848;C57E807A;Trojan;X-Ripper v1.1 [packed]
+ 22252;CFA9AC7D;Trojan;ModemCheck v1.1 Installer
+ 23952;DF1309E9;Trojan;X-Ripper v1.1 [packed]
+ 23968;755CACA7;Trojan;X-Ripper v1.1 [packed]
+ 25008;A1218022;Trojan;BBS Why 1 (Frantic - Baseline Small Intro)
+ 28360;BE74C980;Trojan;Little Sven BB Installer (X-Copy Pro v6.5)
+ 28876;1BC41C93;Trojan;BBS Why 3 (D.I. ANSI Editor v2.8)
+ 29084;AFE24DFC;Trojan;BBS Why 3 (D.I. ANSI Editor v2.8)
+ 29432;D874DD0F;Trojan;BBS Why 3 (D.I. ANSI Editor v2.8)
+ 29492;5C867339;Trojan;BBS Why 3 (D.I. ANSI Editor v2.8)
+ 31320;36731061;Trojan;BBS Why 3 (D.I. ANSI Editor v2.8)
+ 41360;F97CAE4D;Trojan;X-Ripper v1.1
+ 42476;C9C4447B;Trojan;BBS Why 2 (PowerPacker v3.2) [packed]
+ 42532;B70F435A;Trojan;BBS Why 2 (PowerPacker v3.2) [packed]
+ 42676;2F672C23;Trojan;Biomechanic - Joker 2 (VirusZ II 1.00)
+ 55428;3ED4DC12;Trojan;Biomechanic 3 - Variant G (Virus Checker v6.59)
+ 63840;EF81F893;Trojan;Sepultura 2 BB Installer (X-Copy Pro v6.8 cracked Starlight)
+ 64924;E2B88167;Trojan;The Supply Team BB Installer [packed]
+ 66424;BBD5AD3A;Trojan;Eleni v2.2 BB Installer (X-Copy Pro 93 cracked LGD)
+ 67504;8BA9179A;Trojan;Biomechanic 4 - Variant E (LZX v1.20)
+ 71308;C17FD4E2;Trojan;BBS Why 2 (PowerPacker v3.2)
+ 73688;12284ECB;Trojan;BBS Blieb6 (Semtex)
+105900;A31D0AD3;Trojan;BBS Why 1 (Epic - First Demo)
+115512;51684442;Trojan;BBS Why 3 (Faith  - Heroin)
+129652;D18B8288;Trojan;Biomechanic 2 - Variant F (DayDream BBS v1.20)
+184552;A2FCC135;Trojan;BBS Mongo Mania (MST-HCTR) [linked]
+406012;1D783C53;Trojan;Doom (Complex - Amiga Doom)

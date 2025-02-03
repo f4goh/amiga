@@ -1,0 +1,67 @@
+   180;C947CBF3;Loader;Bamiga Sector One & The Kent Team Intro Loader [Emd file]
+  3792;B9AD0C02;Loader;Action Replay Frozen File Loader
+  5240;715E15D9;Loader;Action Replay Frozen File Loader
+ 44568;13C7BEC7;Loader;Shoot Em Up Construction Kit [altered]
+ 44620;1B63D751;Loader;Shoot Em Up Construction Kit [hacked]
+ 44620;98FF1CF5;Loader;Shoot Em Up Construction Kit
+ 44620;DD71AA9D;Loader;Shoot Em Up Construction Kit [hacked]
+ 45428;B5601472;Loader;The Projector v1.2 [h QTX]
+ 50740;668AA6EA;Loader;The Director [packed]
+ 52048;08B4341A;Loader;Runtime AMOS v1.31 [packed]
+ 52820;670B4353;Loader;Runtime AMOS v1.31 [packed]
+ 58604;BBCD0F1B;Loader;GFA-BASIC Run-Only-Interpreter v3.00 EN [packed]
+ 61028;C26E3FA1;Loader;GFA-BASIC Run-Only-Interpreter v3.03 DE [packed]
+ 61172;EAA9892C;Loader;GFA-BASIC Run-Only-Interpreter v3.03 DE [packed]
+ 61340;2B126102;Loader;GFA-BASIC Run-Only-Interpreter v3.03 DE [packed]
+ 62404;04ABFAE9;Loader;Infocom v1.45
+ 62516;5D2C8CA6;Loader;Infocom v1.46
+ 62604;DAB3736F;Loader;GFA-BASIC Run-Only-Interpreter v3.5 DE [packed]
+ 62628;6A3EBDF3;Loader;GFA-BASIC Run-Only-Interpreter v3.041 DE [packed]
+ 62880;370EFC72;Loader;GFA-BASIC Run-Only-Interpreter v3.52 DE [packed]
+ 62932;5E208DEB;Loader;GFA-BASIC Run-Only-Interpreter v3.041 DE [packed]
+ 68444;CEDA1AD1;Loader;GFA-BASIC Run-Only-Interpreter v3.5 DE [packed]
+ 68864;38F2E871;Loader;GFA-BASIC Run-Only-Interpreter v3.52 DE [packed]
+ 71232;7D82504A;Loader;AmigaBASIC v1.2 [packed]
+ 71416;D035A4FC;Loader;AmigaBASIC v1.2 [packed]
+ 72568;9E6DE13C;Loader;Infocom v1.55
+ 72720;41D8A0CF;Loader;AmigaBASIC v1.2 [packed]
+ 74420;EF549E37;Loader;Lights!Camera!Action! v1.0 [packed]
+ 74456;2427B923;Loader;AmigaBASIC v1.2 [packed]
+ 75572;DF2BDBC5;Loader;Runtime AMOS v1.31
+ 76576;1F3B4704;Loader;Runtime AMOS v1.34
+ 77120;2A7398BA;Loader;Runtime AMOS v1.23 [packed]
+ 77264;68DD4053;Loader;AmigaBASIC v1.2 [packed]
+ 78556;071DA63F;Loader;Frotz v1.01 r3
+ 79128;10436662;Loader;Runtime AMOS v1.2 [packed]
+ 79260;0C012151;Loader;Runtime AMOS v1.21 [packed]
+ 79260;31C39B58;Loader;Runtime AMOS v1.21 [packed]
+ 79260;EA35FD9C;Loader;Runtime AMOS v1.21 [packed]
+ 82740;93E25375;Loader;Runtime AMOS v1.1 [packed]
+ 85836;667B6DA6;Loader;GFA-BASIC Run-Only-Interpreter v3.00 EN
+ 85888;29367383;Loader;GFA-BASIC Run-Only-Interpreter v3.00 DE
+ 88432;09AB11CF;Loader;GFA-BASIC Run-Only-Interpreter v3.02 EN
+ 89000;4E55F42F;Loader;GFA-BASIC Run-Only-Interpreter v3.02 DE
+ 89484;99A79644;Loader;GFA-BASIC Run-Only-Interpreter v3.03 DE
+ 90304;6077E824;Loader;GFA-BASIC Run-Only-Interpreter v3.04 DE
+ 91060;65781CBB;Loader;GFA-BASIC Run-Only-Interpreter v3.041 EN
+ 91536;A6AC034C;Loader;GFA-BASIC Run-Only-Interpreter v3.041 DE
+ 91768;679AD054;Loader;GFA-BASIC Run-Only-Interpreter v3.04 DE
+ 92080;C110A899;Loader;GFA-BASIC Run-Only-Interpreter v3.041 FR
+ 92416;A1E7EBD5;Loader;GFA-BASIC Run-Only-Interpreter v3.03 DE
+ 93156;D68DC795;Loader;AmigaBASIC v1.00
+ 93676;4D10B3ED;Loader;Runtime AMOS v1.21 [packed]
+ 99872;A4408604;Loader;GFA-BASIC Run-Only-Interpreter v3.5U EN
+100408;3AA3A39C;Loader;GFA-BASIC Run-Only-Interpreter v3.5 DE
+100408;DBD9CF0E;Loader;GFA-BASIC Run-Only-Interpreter v3.5 DE
+100436;8C809D44;Loader;GFA-BASIC Run-Only-Interpreter v3.51 DE
+100464;6CE15493;Loader;GFA-BASIC Run-Only-Interpreter v3.52 DE
+100464;8D9B3801;Loader;GFA-BASIC Run-Only-Interpreter v3.52 DE
+103484;EDE17D0F;Loader;AmigaBASIC v1.2
+103500;8B55775F;Loader;AmigaBASIC v1.2
+112132;4B2D17A1;Loader;Lights!Camera!Action! v1.0
+113516;11CE6D9E;Loader;Runtime AMOS Pro v1.00
+113516;432E3DB8;Loader;Runtime AMOS Pro v1.00
+116768;F4874A2D;Loader;Runtime AMOS v1.2
+116892;C5127474;Loader;Runtime AMOS v1.21
+117392;1D29CD85;Loader;Runtime AMOS v1.23
+128044;BD12E271;Loader;Runtime AMOS v1.1

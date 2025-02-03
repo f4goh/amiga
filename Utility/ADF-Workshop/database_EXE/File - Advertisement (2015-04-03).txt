@@ -1,0 +1,57 @@
+  1076;1ADE7F27;Advertisement;Software 2000
+  1272;23698CA9;Advertisement;Rays PD
+  1620;CF90A62F;Advertisement;The Wonder-Fuckers
+  3028;AA66ED26;Advertisement;Australian Crackers United 1990 (ACU)
+  3300;00D6C134;Advertisement;Quartz PD
+  3740;5C06B8BC;Advertisement;Express PD
+  5396;1C3DB82C;Advertisement;Sacramento Amiga Computer Club (SACC)
+  6484;0AFE4FFD;Advertisement;Amiga Hackers United (AHU)
+  7912;6800C6BB;Advertisement;Katharsis Intro 1991
+  9584;08A82D3E;Advertisement;AMOS PD
+  9984;E95E4B85;Advertisement;AMOS PD (Déjà-Vu Software)
+ 10752;7CF533B7;Advertisement;F1 Licenceware 1998
+ 12064;A79A91BF;Advertisement;Katharsis Intro 1990
+ 12840;1B049434;Advertisement;AMOS License Ware
+ 13400;8F46E17F;Advertisement;Software 2000
+ 13544;2FEDE568;Advertisement;Katharsis Intro 1990
+ 13880;7C2B89E2;Advertisement;17-Bit Software
+ 13880;E347DE0D;Advertisement;17-Bit Software
+ 13896;B139B842;Advertisement;17-Bit Software
+ 16352;8F59E76D;Advertisement;Katharsis Intro III v2.7 1991
+ 16656;1C207F26;Advertisement;Katharsis Intro III v2.7 1991
+ 17128;D16BD1A3;Advertisement;Déjà-Vu Software (Professional Licensed Software)
+ 17188;E096E1D8;Advertisement;AMOS PD
+ 17216;DEB058A6;Advertisement;AMOS PD
+ 17424;32BE7C75;Advertisement;Virus Free PD
+ 17952;412933C4;Advertisement;Katharsis Intro III v3.1 1991
+ 18208;B871AE3C;Advertisement;Katharsis Intro III v2.7 1991
+ 18392;FF2EA4D2;Advertisement;The Special Brothers
+ 19004;358CA545;Advertisement;Mistic JOE [infected with Ebola]
+ 19308;A791CFCE;Advertisement;Katharsis
+ 19664;424A773D;Advertisement;Software 2000
+ 20120;2461A0CE;Advertisement;Mistic JOE [infected with Ebola]
+ 21316;1FA9E3EC;Advertisement;Katharsis Intro 1990
+ 23480;ABC774B3;Advertisement;17-Bit Software
+ 24560;33E19E7E;Advertisement;The Oviesoft Amiga Division (T.O.A.D.)
+ 28444;63A7308C;Advertisement;Amiga Sector One (ASO)
+ 28676;420A8006;Advertisement;Diko Istvan
+ 28984;105B9FB5;Advertisement;F1 Software
+ 38580;0B561D31;Advertisement;Amiga Hackers United 1989 (AHU)
+ 39272;EA081E44;Advertisement;Dodox
+ 40448;2E39AAD2;Advertisement;Public Computer
+ 45896;54D2F20A;Advertisement;SB-Soft!
+ 47552;6D787C62;Advertisement;The Clan
+ 49728;EB4A5DC1;Advertisement;F1 Licenceware 1994
+ 51816;B36E8902;Advertisement;Amigalovers
+ 52264;C9B9E8A2;Advertisement;Five-Star Software
+ 55308;5F73BA48;Advertisement;Bamiga Sector One and Quoram (BS1 - QRM)
+ 55636;69942D74;Advertisement;Central Licenceware Register
+ 56624;2F5BF13C;Advertisement;Medal (MDL)
+ 57716;17310792;Advertisement;R-Soft
+ 59380;33502D31;Advertisement;The Rick Inc import
+ 60304;7CB550C3;Advertisement;Paralax
+ 63856;C1EB5B01;Advertisement;Computer Eyes
+ 83688;6E36F9A9;Advertisement;Amiga Legal Emulation (ALE)
+ 85812;D0926D8C;Advertisement;Mallander Computersoftware
+106688;57A37AA3;Advertisement;Amiga Sector One (ASO)
+  3708;8BD028AE;Advertisement;Softgallo

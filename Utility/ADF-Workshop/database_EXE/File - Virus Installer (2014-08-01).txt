@@ -1,0 +1,12 @@
+  9592;5951A7C9;Virus installer;The Boot Massacre (The Wizards Inc)
+ 10192;A7976252;Virus installer;Virus Construktion Set v1.0 BB Installer [packed]
+ 14088;0F6643F0;Virus installer;TimeBomber Installer [packed]
+ 17464;AE06C0C7;Virus installer;TimeBomber Installer Final [packed]
+ 19452;98341704;Virus installer;Virus Construktion Set v1.0 BB Installer
+ 25232;E4250706;Virus installer;VirusMaker v1.0 [packed]
+ 32360;5680749E;Virus installer;Virus Construktion Set v2.0 BB Installer [packed]
+ 43700;78D2ED1A;Virus installer;TimeBomber Installer Final
+ 45640;0228F818;Virus installer;TimeBomber Installer Final
+ 45640;C3E5018D;Virus installer;TimeBomber Installer
+ 47944;5652A814;Virus installer;Virus Construktion Set v2.0 BB Installer
+ 84216;6F1973EE;Virus installer;VirusMaker v1.0

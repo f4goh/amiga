@@ -1,0 +1,6 @@
+   952;7C3FE609;Fake virus/Gag;Sumpf Gag
+  7684;C8EB4B4E;Fake virus/Gag;Clock virus Gag
+ 13172;C99D9ECA;Fake virus/Gag;General Hunter v3.2 [packed]
+ 14036;6D10463B;Fake virus/Gag;General Hunter v3.2 [packed]
+ 26112;86678AB4;Fake virus/Gag;General Hunter v3.2
+ 26112;A0F7D578;Fake virus/Gag;General Hunter v3.2

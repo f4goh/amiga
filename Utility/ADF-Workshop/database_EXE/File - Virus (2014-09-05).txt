@@ -1,0 +1,23 @@
+  1504;4CFC4A39;Virus;Eleni v1.0
+  2540;FB6964EB;Virus;BGS9 1 [packed]
+  2580;71E1F152;Virus;BGS9 1 [packed]
+  2972;95DC7C3C;Virus;Infected with CCCP [packed]
+  3052;6CAC29FC;Virus;BGS9 1 [packed]
+  3220;E56CE531;Virus;Doom (Assign)
+  3604;A3C9E418;Virus;ModemCheck v1.1 (LoadWB)
+  3652;557389E5;Virus;BGS9 1 infected with CCCP
+  3960;A38EA65C;Virus;Butonic Jeff v3.00 infected with CCCP
+  5496;27CC8E42;Virus;Doom (Copy)
+  6680;501F46FA;Virus;BlueBox (icon.library)
+  7828;696449FD;Virus;Liberator v5.01
+ 13748;F0EE65DB;Virus;Infected with Smily Cancer 1 [packed]
+ 15820;E09946CF;Virus;Doom (diskfont.library)
+ 16924;20D39BAA;Virus;Liberator v5.01 [unpacked]
+ 38780;087393F1;Virus;Ebola & Happy New Year 96
+ 38780;F8B75BDE;Virus;Ebola & Happy New Year 96
+ 43052;75122A58;Virus;Infected with Ebola [packed]
+ 56668;47417665;Virus;Infected with Lamer Exterminator 6 [linked]
+ 57644;86C715FD;Virus;Infected with Happy New Year 96 [packed]
+116744;98496CEC;Virus;Infected with Happy New Year 96 [packed]
+164504;FE80533B;Virus;Infected with Happy New Year 96 [linked]
+200244;4E0986C1;Virus;Butonic Jeff v3.00 & BBS nocallersat1200
