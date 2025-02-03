@@ -1,10 +1,10 @@
 
 # UAE Software
 
-[UAE software(https://fs-uae.net/download)
+[UAE software](https://fs-uae.net/download)
 
--Fs-uae for Linux
--Winuae for windows
+- Fs-uae for Linux
+- Winuae for windows
 
 
 # UAE debugger 

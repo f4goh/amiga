@@ -2,7 +2,7 @@
 
 
 # Schematics
-![Scart to hdmi(upscaler.png "upscaler")
+![Scart to hdmi](upscaler.png "upscaler")
 
 [Upscaler](https://fr.aliexpress.com/w/wholesale-upscaler.html)
 
