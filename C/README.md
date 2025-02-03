@@ -3,7 +3,7 @@
 vcm must be executable
 
 ```console
-chmod +x ~/amiga/C/Linux/vbcc/bin/vcm
+chmod +x ~/amiga/C/Linux/vbcc/bin/vca
 ```
 
 add PATH directory
@@ -29,7 +29,7 @@ go into any c source directory
 ```console
 cd ~/amiga/C/Sources/disk01
 
-vcm nomfic.c
+vca nomfic.c
 ```
 
 
