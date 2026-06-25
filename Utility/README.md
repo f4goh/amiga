@@ -3,10 +3,9 @@
 
 [Amiga utility](https://dirkwhoffmann.github.io/Moira/docs/Overview/About.html)
 
-# adf reader on line
+# [ADF read online](https://f4goh.github.io/amiga/Utility/ADF-reader/) 
 
-[Amiga reader](https://github.com/emartisoft/ADF-reader)
-
+# Create copper list easy
 
 [gradient-blaster](https://gradient-blaster.grahambates.com)
 
