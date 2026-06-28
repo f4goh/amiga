@@ -7,6 +7,8 @@
 #include <graphics/gfxbase.h>
 //#include <ahpc_registers.h>
 
+#include "tilesheet.h"
+
 extern struct GfxBase *GfxBase;
 extern struct Custom custom;
 
@@ -188,56 +190,7 @@ static UWORD __chip coplist[] = {
     COP_WAIT_END
 };
 
-#define FILE_ID_LEN (8)
 
-struct Ratr0TileSheetHeader {
-    UBYTE id[FILE_ID_LEN];
-    UBYTE version, flags, reserved1, bmdepth;
-    UWORD width, height;
-    UWORD tile_width, tile_height;
-    UWORD num_tiles_h, num_tiles_v;
-    UWORD palette_size, reserved2;
-    ULONG imgdata_size;
-    ULONG checksum;
-};
-
-#define MAX_PALETTE_SIZE 32
-struct Ratr0TileSheet {
-    struct Ratr0TileSheetHeader header;
-    UWORD palette[MAX_PALETTE_SIZE];
-    UBYTE *imgdata;
-};
-
-
-ULONG ratr0_read_tilesheet(const char *filename, struct Ratr0TileSheet *sheet)
-{
-    int elems_read;
-    FILE *fp = fopen(filename, "rb");
-
-    if (fp) {
-        int num_img_bytes, total_bytes = 0;
-        elems_read = fread(&sheet->header, sizeof(struct Ratr0TileSheetHeader), 1, fp);
-        total_bytes += elems_read * sizeof(struct Ratr0TileSheetHeader);
-        elems_read = fread(&sheet->palette, sizeof(UWORD), sheet->header.palette_size, fp);
-        total_bytes += elems_read * sizeof(UWORD);
-        sheet->imgdata = AllocMem(sheet->header.imgdata_size, MEMF_CHIP|MEMF_CLEAR);
-        elems_read = fread(sheet->imgdata, sizeof(unsigned char), sheet->header.imgdata_size, fp);
-        total_bytes += elems_read;
-        fclose(fp);
-    } else {
-        printf("ratr0_read_tilesheet() error: file '%s' not found\n", filename);
-        return 0;
-    }
-    return elems_read;
-}
-
-/**
- * Frees the memory that was allocated for the specified RATR0 tile sheet.
- */
-void ratr0_free_tilesheet_data(struct Ratr0TileSheet *sheet)
-{
-    if (sheet && sheet->imgdata) FreeMem(sheet->imgdata, sheet->header.imgdata_size);
-}
 
 static BOOL init_display(void)
 {

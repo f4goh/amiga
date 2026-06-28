@@ -1,8 +1,4 @@
-#include <stdio.h>
-//#include <exec/types.h>
-//#include <clib/exec_protos.h>
 #include "tilesheet.h"
-
 
 /**
  * Reads the image information from specified RATR0 tile sheet file.

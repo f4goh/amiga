@@ -4,6 +4,8 @@
 
 ```console
 chmod +x ~/amiga/ASM/Linux/asm
+chmod +x ~/amiga/ASM/Linux/vasmm68k_mot
+chmod +x ~/amiga/ASM/Linux/vlink
 ```
 
 - add PATH directory
@@ -27,9 +29,17 @@ source ~/.bashrc
 - go into any asm source directory
 
 ```console
-cd ~/amiga/C/Sources/disk01
+cd ~/amiga/ASM/sources/kitt
+ls
+kitt.s
+asm kitt.s 
+vasm 1.8k (c) in 2002-2021 Volker Barthelmann
+vasm M68k/CPU32/ColdFire cpu backend 2.3o (c) 2002-2021 Frank Wille
+vasm motorola syntax module 3.15a (c) 2002-2021 Frank Wille
+vasm hunk format output module 2.13 (c) 2002-2020 Frank Wille
 
-asm nomfic.s
+code(acrx2):	       34554 bytes
+Compilation réussie : kitt.o et kitt générés.
 ```
 
 ## Amiga ASM with Windows

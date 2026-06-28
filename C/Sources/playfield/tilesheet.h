@@ -1,4 +1,8 @@
 // information about a tile sheet
+#include <exec/types.h>
+#include <clib/exec_protos.h>
+#include <stdio.h>
+
 #define FILE_ID_LEN (8)
 
 struct Ratr0TileSheetHeader {
