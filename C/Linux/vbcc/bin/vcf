@@ -1,0 +1,37 @@
+#!/bin/bash
+
+export VBCC=$HOME/amiga/C/Linux/vbcc
+export PATH="$PATH:$VBCC/bin"
+
+export NDK_INC="$VBCC/NDK_1.3/Includes1.3/include.h"
+
+SRC="playfield.c"
+
+if [ ! -f "$SRC" ]; then
+    echo "Erreur: $SRC introuvable"
+    exit 1
+fi
+
+echo "Cleaning..."
+rm -f playfield_*
+
+build () {
+    TARGET=$1
+    DEFINES=$2
+
+    echo "Building $TARGET ..."
+
+    vc +kick13 -I${NDK_INC} $DEFINES $SRC -lamiga -lauto -o $TARGET
+
+    if [ $? -ne 0 ]; then
+        echo "Erreur build $TARGET"
+        exit 2
+    fi
+}
+
+build "playfield_ni" ""
+build "playfield_il" "-DINTERLEAVED"
+build "playfield_split_ni" "-DSPLIT_SCREEN"
+build "playfield_split_il" "-DSPLIT_SCREEN -DINTERLEAVED"
+
+echo "OK build terminé"

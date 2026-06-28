@@ -4,7 +4,7 @@
 export VBCC=$HOME/amiga/C/Linux/vbcc
 export PATH="$PATH:$HOME/amiga/C/Linux/vbcc/bin"
 export NDK_INC="$VBCC/NDK_1.3/Includes1.3/include.h"
-
+#export NDK_INC="$VBCC/NDK_3.9/Include/include.h"
 
 # Vérifier si un fichier source est fourni
 if [ "$#" -lt 1 ]; then
@@ -24,7 +24,10 @@ fi
 
 
 # Compilation avec vc
-vc -I${NDK_INC} -c99 +kick13 "$SOURCE_FILE"
+
+vc +kick13 -I${NDK_INC} "$SOURCE_FILE" -lamiga -lauto 
+#vc +kick13 "$SOURCE_FILE"
+#vc -I${NDK_INC} -c99 +kick13 "$SOURCE_FILE"
 if [ $? -ne 0 ]; then
     echo "Erreur lors de la compilation avec vc."
     exit 3
