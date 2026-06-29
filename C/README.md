@@ -106,7 +106,7 @@ hello
 
 - Amiga C C++ Assembler development on Windows using MS Visual Studio Code
 
-[lien YT](https://www.youtube.com/watch?v=x6Sw07ZQxXk
+[lien YT](https://www.youtube.com/watch?v=x6Sw07ZQxXk)
 
 
 ## About C for Amiga
