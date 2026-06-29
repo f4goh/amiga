@@ -10,7 +10,7 @@ CC := vc +kick13
 CFLAGS := -I$(NDK_INC) -c99 -O2 -I../include
 LDFLAGS := -lamiga -lauto
 
-EXES := playfield_ni playfield_split_ni playfield_il playfield_split_il
+EXES := example_01 example_02 example_03
 
 .PHONY: all clean
 
@@ -19,19 +19,14 @@ all: $(EXES)
 clean:
 	rm -f *.o a.out $(EXES)
 
-playfield_ni:
-	$(CC) $(CFLAGS) playfield.c tilesheet.c $(LDFLAGS)
+example_01:
+	$(CC) $(CFLAGS) example_01.c tilesheet.c $(LDFLAGS)
 	mv a.out $@
 
-playfield_il:
-	$(CC) $(CFLAGS) -DINTERLEAVED playfield.c tilesheet.c $(LDFLAGS)
+example_02:
+	$(CC) $(CFLAGS) example_02.c tilesheet.c $(LDFLAGS)
 	mv a.out $@
 
-playfield_split_ni:
-	$(CC) $(CFLAGS) -DSPLIT_SCREEN playfield.c tilesheet.c $(LDFLAGS)
+example_03:
+	$(CC) $(CFLAGS) example_03.c tilesheet.c $(LDFLAGS)
 	mv a.out $@
-
-playfield_split_il:
-	$(CC) $(CFLAGS) -DSPLIT_SCREEN -DINTERLEAVED playfield.c tilesheet.c $(LDFLAGS)
-	mv a.out $@
-
