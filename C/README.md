@@ -1,5 +1,7 @@
 ## Amiga C with Linux
 
+![compil](compilation.png)
+
 vcm must be executable
 
 ```console
@@ -15,7 +17,7 @@ add PATH directory
 nano ~/.bashrc
 ```
 
-add ligne
+add ligne at the end into bashrc
 ```console
 export PATH=$HOME/amiga/C/Linux/vbcc/bin:$PATH
 ```
@@ -34,6 +36,20 @@ cd ~/amiga/C/Sources/test
 vca hello.c hello.o
 Compilation réussie : exécutable hello généré.
 ```
+
+but it is better to use Makefile when you have more than one c file to compile
+
+```console
+ale@ale-desktop:~/amiga/C/Sources/copper$ make clean
+rm -f copper a.out
+ale@ale-desktop:~/amiga/C/Sources/copper$ make
+vc +kick13 -I/home/ale/amiga/C/Linux/vbcc/NDK_1.3/Includes1.3/include.h copper.c -lamiga -lauto
+mv a.out copper
+ale@ale-desktop:~/amiga/C/Sources/copper$ ls
+copper  copper.c  Makefile
+ale@ale-desktop:~/amiga/C/Sources/copper$ 
+```
+
 
 to resume :
 
@@ -76,6 +92,15 @@ hello
 ```
 
 ![exec_code](exec_test.png)
+
+## C examples adapted from [weiju](https://github.com/weiju/amiga_hardware_in_c)
+
+![intro](intro_yt.png)
+
+- [Amiga Hardware Programming in C](https://www.youtube.com/playlist?list=PLF3LSwdkRB1DLYvsFJynIBnmlIXkuTwTZ)
+- [amiga-stuff](https://github.com/weiju/amiga-stuff)
+- [amiga_c_mods](https://github.com/weiju/amiga_c_mods) not for kick 1.3 
+
 
 ## Amiga C with Windows
 
