@@ -1,0 +1,137 @@
+                        Well, this is the Docs for:
+
+                    PRO-PACKER 2.1 by Christian Estrup
+
+                       Release Date: April 4th, 1992.
+
+
+Preface
+-------
+
+Pro-Packer 2.1 is Freely Distributable. This means, that the program may be
+freely distributed (!), as long as the replayer and this docfile are
+included. NO money WHATSOEVER may be made from selling Pro-Packer 2.1.
+Public Domain companies and their likes, who want to sell this program,
+have to get a special, written permission from me. You will find my address
+at the bottom of this doc-file.
+
+
+Introduction
+------------
+
+Pro-Packer 2.1 enables you to pack your ProTracker-modules (and
+compatibles). It comes with a replayer, which is able to play the packed
+modules a lot faster than the original PT-replay-routine.
+
+
+The Packer
+----------
+
+Using the packer is fairly easy. To load a module, just click in the load
+gadget (surprise). You will then see the familiar (?) req.library
+file-requester. (This means, of course, that you need req.library to run
+the packer!)
+
+When you've selected a module, it will automatically be packed. When packing
+is finished, the packer will show you the length of the packed module. The
+packer will also tell you, whether or not the module uses finetune (see
+'The Replayer' about this).
+
+To save the packed module, just click in the save gadget (easy, isn't it?),
+and you'll see the file-requester again. Select a filename, and you're
+done...
+
+
+The Replayer
+------------
+
+Using the replayer is almost like any other PT/NT/ST-replayer: Just call
+mt_init at the beginning, mt_music every frame, and mt_end in the end.
+
+Please note, that the replayer supports VBlank-timed modules only.
+
+Right before the 'mt_init'-label, you'll see two constants: 'mt_lev6use'
+and 'mt_finetuneused'. These two constants are used for conditional
+assembling, and they enable you to 'sort of' customize the replayer.
+
+'mt_lev6use' decides, whether or not the replayer should use level
+6-interrupt to minimize it's use of raster-time. It is my impression, that
+e.g. some trackloaders aren't too fond of running together with level
+6-replayers, so if your demo/intro/whatever belongs to this category, just
+turn level 6-interrupt off. This will, of course, slow down the replayer.
+
+'mt_finetuneused' decides, whether or not the replayer should support
+finetuned samples. Suporting finetune makes the replayer use another 5-6
+raster-lines, so if your module doesn't use finetune (the packer will tell
+you this), just turn finetune off.
+
+
+The speed of the replayer of course depends on the number of effect
+commands used, as well as on the use (or non-use) of finetune and/or
+level 6-interrupt. For a  'normal' module, WITH level 6-interrupt and
+WITHOUT finetune, the replayer will use 14-15 raster-lines, but this is of
+course the best you can achieve.
+
+
+Bugs, improvements etc.
+-----------------------
+
+I surely hope there's no bugs this time. Just kidding, THIS time I've spent
+a lot of time testing both the packer and the replayer with several
+modules, and no bugs have showed up (yet). Should you, however, find a bug,
+or should you have any ideas on how to improve this utility, OR, if you
+would just like to get in touch with me, here's how:
+
+Normal mail: Christian Estrup
+             Tornevangsvej 5 B
+             DK-3460 Birkeroed
+             DENMARK
+
+Or, if you're busy, write me some e-mail at (InterNet): dsestr@hp1.cbs.dk
+
+
+Acknowledgements
+----------------
+
+I would like to thank the following people, whose ideas, testing, critics
+etc. have all helped me to do this upgrade:
+
+Kim Burgaard for beta-testing and some ideas (Maybe the CIA-version will
+show up some day).
+
+Mads Vestergaard for bug-reports and beta-testing.
+
+Carsten Sorensen (Slammer of Anarchy) for, by making a faked
+'req.library-version' of the packer, forcing me to include this.
+
+Bruce Dawson and Colin Fox for their GREAT req.library.
+
+And of course all the people who helped me spread this utility.
+
+
+Program history
+---------------
+
+Version 1.0: First version. Replayer used about 50 % of the PT-replayer's
+             raster-time, and the packer wasn't very efficient.
+
+Version 2.0: MAJOR packing algorithm improvement, for the first time
+             allowing me to talk about a 'packer'. And a minor increase in
+             replayer-speed.
+
+Version 2.1: This version. Totally new user-interface, using req.library.
+             Fixed minor bug in the packer. Packing sped up by about 25 %.
+             Fixed bug in the replayer: Register D4 was used as Longword,
+             but only initialized as Word.
+             Fixed bug in the replayer: Modules with longer position-tables
+             than the defined 'length' messed up (e.g. if you defined which
+             patterns to play from position 0-63, but set 'length' to 60).
+
+Future:      Well, this is up to you. Write me and tell me your opinion...
+
+
+Copyrights
+----------
+
+req.library is (C) 1989 by Bruce Dawson and Colin Fox.
+

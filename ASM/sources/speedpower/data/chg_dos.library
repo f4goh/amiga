@@ -1,0 +1,21 @@
+execbase=4
+openlib=-408
+
+start:
+     move.l execbase,a6
+     lea dosname,a1
+     moveq #0,d0
+     jsr openlib(a6)
+     move.l d0,dosbase
+     beq error
+     rts
+
+error:
+     move #$ff,d7
+     rts
+dosname:
+     dc.b 'dos.library',0,0
+     even
+dosbase:
+     blk.l 1,0
+

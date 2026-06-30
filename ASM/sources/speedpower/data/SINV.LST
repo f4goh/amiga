@@ -1,0 +1,7 @@
+table$=SPACE$(2*360)
+a=VARPTR(table$)
+FOR z=0 TO 359
+  x=152+152*COS(z*2*PI/360)
+  DPOKE a+z*2,x
+NEXT z
+BSAVE "sinv",a,720

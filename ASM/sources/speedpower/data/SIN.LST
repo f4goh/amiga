@@ -1,0 +1,22 @@
+centre=320
+amplitude=310
+long_let=32
+long_ens=128
+tableau$=SPACE$(4*360)
+debut=VARPTR(tableau$)
+FOR angle=0 TO 359
+  r=angle*PI/180
+  x=amplitude*SIN(r)+centre
+  DPOKE debut+angle*4,MOD(x,16)*long_ens
+  DPOKE debut+angle*4+2,0
+  IF MOD(x,long_let)>15
+    DPOKE debut+angle*4+2,1
+  ENDIF
+  PLOT x,angle/2
+  PRINT AT(0,0);angle," ";MOD(x,long_let);" ",
+  VSYNC
+  '  REPEAT
+  '  PAUSE 2
+  ' UNTIL MOUSEK
+NEXT angle
+BSAVE "df0:sin",debut,4*360

@@ -1,0 +1,49 @@
+REM                        Routine de trace de surfaces
+REM
+REM largeur et hauteur de l'ecran de l'amiga
+horiz=256/2
+vert=256/2
+REM variables de la perspective
+d=35
+r=60
+k=20
+REM rotx varie de 0 a 180
+rotx=0
+roty=30
+teta=rotx*PI/180
+phi=roty*PI/180
+REM variables de la fonction 3d
+xmin=-7
+xmax=7
+ymin=-7
+ymax=7
+nbcourbes=(xmax-xmin)/19
+nbpoints=(ymax-ymin)/19
+REM                      definition des espaces de sauvegarde
+table$=SPACE$(500)
+a=VARPTR(table$)
+p=0
+REM                 calcul de la fonction
+DRAW 256,0 TO 256,256
+FOR x=xmin TO xmax STEP nbcourbes
+  FOR y=ymin TO ymax STEP nbpoints
+    perspective
+    PLOT (horiz+xe),(vert-ye)
+    '    POKE a+p,(horiz+xe)
+    '    INC p
+    '    POKE a+p,(vert-ye)
+    '    INC p
+  NEXT y
+NEXT x
+PRINT p,p/2,SQR(p/2)
+' BSAVE "df0:datasurf18",a,p
+' INPUT b
+PROCEDURE perspective
+  '  z=5*(SIN(x)/x)*(SIN(y)/y)
+  z=2*(SIN(SQR(x*x+y*y))/SQR(x*x+y*y))
+  xo=-x*SIN(teta)+y*COS(teta)
+  yo=-x*COS(teta)*SIN(phi)-y*SIN(teta)*SIN(phi)+z*COS(phi)
+  zo=-x*COS(teta)*COS(phi)-y*SIN(teta)*COS(phi)-z*SIN(phi)+r
+  xe=(d*xo/zo)*k
+  ye=(d*yo/zo)*k
+RETURN

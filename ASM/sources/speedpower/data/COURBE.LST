@@ -1,0 +1,17 @@
+' tableau$=SPACE$(4*360)
+' debut=VARPTR(tableau$)
+FOR angle=0 TO 359
+  r=angle*PI/180
+  x=150*COS(r)+160
+  y=100*SIN(r)+100
+  '  REPEAT
+  '  MOUSE x,y,k
+  '  PRINT AT(0,0);x,y
+  ' UNTIL MOUSEK
+  '  DPOKE debut+angle*4,x
+  '  DPOKE debut+angle*4+2,y
+  PLOT x,y
+  PRINT AT(0,0);x,y,angle
+  VSYNC
+NEXT angle
+' BSAVE "df0:courbe",debut,4*360
