@@ -21,7 +21,7 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
+		INCLUDE "../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 

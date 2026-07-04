@@ -21,57 +21,29 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-ExecSupervisor	EQU	-30
-exec_AttnFlags	EQU	296
-CIAAPRA		EQU	$BFE001
+		INCLUDE "../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 
-		SECTION Data,DATA_C
+		SECTION	Code,CODE_C		
 
-ModFile:	INCBIN "BareMetal:Assets/mod.file"
+;		BCLR.B	#1,CIAAPRA		; Enable low-pass filter
+;		BSET.B	#1,CIAAPRA		; Disable low-pass filter
 
-;-----------------------------------------------------------
+		LEA	$DFF000,a5
+		MOVE.L	#SineData,AUD0LC(a5)	; Set pointer to audio data location
+		MOVE.W	#6,AUD0LEN(a5)		; Audio length in words, 6 words = 12 bytes
+		MOVE.W	#64,AUD0VOL(a5)		; Maximum volume
+		MOVE.W	#296,AUD0PER(a5)	; Period of 296 for 1kHz tone on a PAL system
+		MOVE.W	#$8201,DMACON(a5)	; Start DMA for audio channel 0
 
-		SECTION	Code,CODE
-
-		MOVE.L	4.w,a6			; A6 = Exec base
-		MOVEQ	#0,d0
-		BTST.B	#0,exec_AttnFlags(a6)	; Check if > 68000 processor
-		BEQ.B	.NoVBR			; On 68000 no VBR (always zero)
-		LEA.L	GetVBR(PC),a5		; Function to call as supervisor
-		JSR	ExecSupervisor(a6)	; Call supervisor function in A5
-		MOVE.L	d0,a0			; A0 = VBR
-
-.NoVBR		LEA	$DFF000,a6		; Custom base
-		MOVE.L	d0,a0			; VBR offset
-		MOVEQ	#1,d0			; 0 = NTSC, otherwise PAL
-		BSR	_mt_install_cia		; Initialise CIA interrupt
-
-		LEA.L	ModFile,a0		; A0 - Pointer to mod file
-		MOVEQ	#0,d0			; D0 - Start location (pattern 0)
-		MOVE	d0,a1			; A1 - APTR to samples (NULL)
-		BSR	_mt_init		; Initialise the player
-
-		MOVE.B	#1,_mt_Enable		; Start playback
-
-.WaitLoop	BTST	#6,CIAAPRA		; Check for left mouse click
-		BNE.B	.WaitLoop		; No click, keep testing
-
-		BSR	_mt_end			; Stop playing
-		BSR	_mt_remove_cia		; Remove CIA interrupt
+WaitLoop:	BTST	#6,CIAAPRA		; Check for left mouse click
+		BNE.B	WaitLoop		; No click, keep testing
+		MOVE.W	#1,DMACON(a5)		; Stop DMA for audio channel 0
 		RTS
 
-
 ;-----------------------------------------------------------
 
-GetVBR:		DC.L	$4E7A0801		; MOVEC VBR,d0
-		RTE				; Return from supervisor mode
-
-
-;-----------------------------------------------------------
-
-		INCDIR "BareMetal:ptplayer/"
-		INCLUDE "ptplayer.asm"
+SineData:	DC.B	0,64,111,127,111,64,0,-64,-111,-127,-111,-64
 
 ;-----------------------------------------------------------

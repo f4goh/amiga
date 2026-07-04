@@ -21,47 +21,45 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
-
 ExecSupervisor	EQU	-30
-exec_AttnFlags	EQU	296	
+exec_AttnFlags	EQU	296
+CIAAPRA		EQU	$BFE001
 
 ;-----------------------------------------------------------
 
-		SECTION	Code,CODE_C		
+		SECTION Data,DATA_C
 
-Main:		MOVE.L	4.w,a6			; A6 = Exec base
-		SUB.L	a0,a0			; A0 = zero
+ModFile:	INCBIN "../Assets/monalisa" ;module
+
+;-----------------------------------------------------------
+
+		SECTION	Code,CODE
+
+		MOVE.L	4.w,a6			; A6 = Exec base
+		MOVEQ	#0,d0
 		BTST.B	#0,exec_AttnFlags(a6)	; Check if > 68000 processor
 		BEQ.B	.NoVBR			; On 68000 no VBR (always zero)
 		LEA.L	GetVBR(PC),a5		; Function to call as supervisor
 		JSR	ExecSupervisor(a6)	; Call supervisor function in A5
 		MOVE.L	d0,a0			; A0 = VBR
 
-.NoVBR		LEA	$DFF000,a5		; Custom base
-		MOVE.W	INTENAR(a5),d7		; Store original value
-		OR.W	#$8000,d7		; Set the SET bit
-		MOVE.L	IRQ4(a0),OldVector	; Store original vector
+.NoVBR		LEA	$DFF000,a6		; Custom base
+		MOVE.L	d0,a0			; VBR offset
+		MOVEQ	#1,d0			; 0 = NTSC, otherwise PAL
+		BSR	_mt_install_cia		; Initialise CIA interrupt
 
-		MOVE.L	#AudioHandler,IRQ4(a0)	; Set the new vector
-		MOVE.W	#$8080,INTENA(a5)	; Enable interrupt for audio channel 0
+		LEA.L	ModFile,a0		; A0 - Pointer to mod file
+		MOVEQ	#0,d0			; D0 - Start location (pattern 0)
+		MOVE	d0,a1			; A1 - APTR to samples (NULL)
+		BSR	_mt_init		; Initialise the player
 
-		MOVE.L	#SndData,AUD0LC(a5)	; Set pointer to audio data location
-		MOVE.W	#SndLen>>1,AUD0LEN(a5)	; Audio length in words
-		MOVE.W	#64,AUD0VOL(a5)		; Maximum volume
-		MOVE.W	#296,AUD0PER(a5)	; Period of 296 for 1kHz tone on a PAL system
-		MOVE.W	#$8201,DMACON(a5)	; Start DMA for audio channel 0
+		MOVE.B	#1,_mt_Enable		; Start playback
 
-.WaitLoop	MOVE.W	AH_Count(PC),d0		; Get interrupt count value
-		CMPI.W	#2,d0			; Check if there were 2 interrupts
-		BGE.B	.EndWait		; If 2 or more then end the wait loop
-		BTST	#6,CIAAPRA		; Check for left mouse click
+.WaitLoop	BTST	#6,CIAAPRA		; Check for left mouse click
 		BNE.B	.WaitLoop		; No click, keep testing
 
-.EndWait	MOVE.W	#$0001,DMACON(a5)	; Stop DMA for audio channel 0
-		MOVE.W	#$0080,INTENA(a5)	; Disable interrupt for audio channel 0	
-		MOVE.L	OldVector(PC),IRQ4(a0)	; Restore original vector
-		MOVE.W	d7,INTENA(a5)		; Restore original value
+		BSR	_mt_end			; Stop playing
+		BSR	_mt_remove_cia		; Remove CIA interrupt
 		RTS
 
 
@@ -73,25 +71,7 @@ GetVBR:		DC.L	$4E7A0801		; MOVEC VBR,d0
 
 ;-----------------------------------------------------------
 
-AudioHandler:	MOVE.W	#$0080,$DFF000+INTREQ	; Acknowledge the interrupt
-		MOVE.L	#Silence,$DFF000+AUD0LC	; Next audio location: silence
-		MOVE.W	#2,$DFF000+AUD0LEN	; Data consists of 2 words (4 bytes)
-		ADDQ.W	#1,AH_Count		; Increase counter
-		RTE
-
+		INCDIR "../ptplayer/"
+		INCLUDE "ptplayer.asm"
 
 ;-----------------------------------------------------------
-
-AH_Count:	DC.W	0	; Storage for interrupt counter
-OldVector:	DC.L	0	; Storage for original interrupt vector
-Silence:	DC.L	0
-
-
-;-----------------------------------------------------------
-
-SndData:	INCBIN "BareMetal:Assets/Audio-Sample.raw"
-SndLen		EQU 	*-SndData
-	
-
-;-----------------------------------------------------------
-

@@ -1,0 +1,12 @@
+
+Files:
+  playSample3.s:  Code 0(3c8c) hex
+
+
+Section mapping (numbers in hex):
+------------------------------
+  00000000 Code  (size 3c8c)
+           00000000 - 00003c8c playSample3.s(Code)
+
+
+Linker symbols:
