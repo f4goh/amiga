@@ -136,7 +136,7 @@ https://www.stashofcode.fr/category/amiga/page/2/
 
 https://github.com/prb28/vscode-amiga-assembly/
 
-https://github.com/stefanocoppi/amiga_game_prog_assembly
+https://amigamuseum.emu-france.info/Fichiers/ADF/Installation,%20Kickstars,%20Workbench%20Tutorials%20&%20Promotional/
 
 
 

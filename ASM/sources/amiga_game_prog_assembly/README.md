@@ -10,10 +10,12 @@ Vous souhaitez apprendre à programmer directement le **Commodore Amiga** en **a
 
 Le livre commence par les bases de l'assembleur 68000 avant d'aborder progressivement les techniques utilisées dans les jeux commerciaux de l'époque.
 
+# Attention Amiga 1200 Chipset : AGA !!
+
 ## Au programme
 
 - Les bases de l'assembleur Motorola 68000
-- L'architecture du Commodore Amiga
+- L'architecture du Commodore Amiga 1200 Chipset : AGA
 - Les bitplanes
 - Les Copper Lists
 - La programmation du Blitter
