@@ -27,8 +27,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Lier le fichier objet
-#$TOOLS_DIR/vlink -bamigahunk -Bstatic -o "$BASE_NAME" "$BASE_NAME.o"
-$TOOLS_DIR/vlink -bamigahunk -Bstatic -M -o "$BASE_NAME" "$BASE_NAME.o" > "$BASE_NAME.map"
+$TOOLS_DIR/vlink -bamigahunk -Bstatic -o "$BASE_NAME" "$BASE_NAME.o"
+#$TOOLS_DIR/vlink -bamigahunk -Bstatic -M -o "$BASE_NAME" "$BASE_NAME.o" > "$BASE_NAME.map"
 if [ $? -ne 0 ]; then
     echo "Erreur lors du lien avec vlink."
     exit 4
