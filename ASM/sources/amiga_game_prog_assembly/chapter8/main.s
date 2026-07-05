@@ -10,7 +10,7 @@
 ;****************************************************************
 ; INCLUDES
 ;****************************************************************
-          incdir     "include"
+          incdir     "../include"
           include    "hw.i"
           include    "playfield.i"
           include    "tilemap.i"
