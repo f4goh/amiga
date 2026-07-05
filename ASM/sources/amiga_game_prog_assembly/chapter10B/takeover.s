@@ -8,7 +8,7 @@
 ;****************************************************************
 ; INCLUDES
 ;****************************************************************          
-             incdir     "include"
+             incdir "../include"
              include    "hw.i"
              include    "funcdef.i"
              include    "exec/exec_lib.i"

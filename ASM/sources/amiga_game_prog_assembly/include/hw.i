@@ -12,6 +12,10 @@ HARDWARE_HW_I  SET        1
 
 ExecBase    equ $4
 CIAAPRA     equ $bfe001
+CIAAICR     equ $bfed01
+CIAACRA     equ $bfee01
+CIAACRB     equ $bfef01
+
 
 *******************************************************************************
 *
@@ -36,6 +40,7 @@ VHPOSR      equ vhposr                           ;  "         "
 JOY0DAT     equ joy0dat                          ;  "         "
 JOY1DAT     equ joy1dat                          ;  "         "
 CLXDAT      equ clxdat                           ;  "         "
+CLXCON      equ clxcon                           ;  "         "
 ADKCONR     equ adkconr                          ;  "         "
 POT0DAT     equ pot0dat                          ;  "         "
 POT1DAT     equ pot1dat                          ;  "         "
@@ -171,6 +176,12 @@ BPL5PTL     equ bplpt+$12
 BPL6PT      equ bplpt+$14
 BPL6PTH     equ bplpt+$14
 BPL6PTL     equ bplpt+$16
+*BPL7PT      equ bplpt+$18
+*BPL7PTH     equ bplpt+$18
+*BPL7PTL     equ bplpt+$1A
+BPL7PT      equ $0f8
+BPL8PT      equ $0fc
+
 
 BPLCON0     equ bplcon0                          ; Just capitalization...
 BPLCON1     equ bplcon1                          ;  "         "
@@ -258,6 +269,7 @@ SPR7POS     equ spr+$38
 SPR7CTL     equ SPR7POS+sd_ctl
 SPR7DATA    equ SPR7POS+sd_dataa
 SPR7DATB    equ SPR7POS+$06                      ; should use sd_datab ...
+
 *
 * Color registers...
 *

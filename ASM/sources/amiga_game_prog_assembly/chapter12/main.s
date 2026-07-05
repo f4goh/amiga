@@ -8,7 +8,7 @@
 ; (c) 2024 Stefano Coppi
 ;****************************************************************
 
-           incdir     "include"
+           incdir "../include"
            include    "hw.i"
            include    "playfield.i"
            include    "bob.i"

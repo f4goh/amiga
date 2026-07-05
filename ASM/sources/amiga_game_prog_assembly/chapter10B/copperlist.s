@@ -8,7 +8,7 @@
 ;****************************************************************
 ; INCLUDES
 ;****************************************************************
-         incdir     "include"
+         incdir "../include"
          include    "hw.i"
          include    "scroll_bgnd.i"
          include    "playfield.i"
