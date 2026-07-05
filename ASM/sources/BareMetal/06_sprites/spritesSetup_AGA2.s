@@ -22,13 +22,13 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
+		INCLUDE	"../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 
 		SECTION	Code,CODE_C		
 
-		INCLUDE	"BareMetal:Include/SafeStart.i"
+		INCLUDE	"../Include/SafeStart.i"
 
 Main:		LEA.L	Coplist(PC),a0		; 
 		MOVE.L	a0,COP1LC(a5)		; Set start address for coplist
@@ -393,7 +393,7 @@ Sprite7:	DC.L	$10100000,$20000000
 		DC.L	0,0
 
 
-Sine:		INCLUDE	"BareMetal:Include/Sine256W.i"
+Sine:		INCLUDE	"../Include/Sine256W.i"
 
 		SECTION	BitPlane,BSS_C
 

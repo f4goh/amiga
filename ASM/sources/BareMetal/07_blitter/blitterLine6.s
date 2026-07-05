@@ -21,20 +21,20 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
+		INCLUDE	"../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 
 		SECTION	Code,CODE_C		
 
-		INCLUDE	"BareMetal:Include/SafeStart.i"
+		INCLUDE	"../Include/SafeStart.i"
 
 Main:		LEA.L	Coplist(PC),a0		; 
 		MOVE.L	a0,COP1LC(a5)		; Set start address for coplist
 
 ; Setup the bitplane pointers in the coplist
 
-		LEA.L	BitplaneScr,a1		; APTR Start of bitplane
+		LEA.L	Bitplane,a1		; APTR Start of bitplane 1
 		MOVE.L	a1,d0
 		MOVE.W	d0,6(a0)		; Place low word into coplist
 		SWAP	d0
@@ -65,16 +65,16 @@ Main:		LEA.L	Coplist(PC),a0		;
 .WaitLoop	MOVE.L	VPOSR(a5),d0		; Get VPOSR and VHPOSR 
 		LSR.L	#8,d0			; Shift vertical pos to lowest 9 bits
 		AND.W	#$01FF,d0		; Remove unwanted bits
-		CMP.W	#$00A0,d0		; On line $A0?
+		CMP.W	#$0001,d0		; On line 1?
 		BNE.B	.Skip			; No? Do nothing
 
-		BSR.B	DrawBox
+		BSR.B	DrawLines
 
 .Wait		MOVE.L	VPOSR(a5),d0		; Get vertical an horizontal position
 		LSR.L	#8,d0			; Shift vertical pos to lowest 9 bits
 		AND.W	#$01FF,d0		; Remove unwanted bits
-		CMP.W	#$00A0,d0		; On line $A0?
-		BEQ.B	.Wait			; Wait until no longer on line $A0
+		CMP.W	#$0001,d0		; On line 1?
+		BEQ.B	.Wait			; Wait until no longer on line 1
 
 .Skip		BTST	#6,CIAAPRA		; Check for left mouse click
 		BNE.B	.WaitLoop		; No click, keep testing
@@ -84,76 +84,30 @@ Main:		LEA.L	Coplist(PC),a0		;
 
 ;-----------------------------------------------------------
 
-DrawBox:	LEA.L	SinePos(PC),a0		; APTR sine table positions
+DrawLines:	LEA.L	SinePos(PC),a0		; APTR sine table positions
 		LEA.L	Sine(PC),a1		; APTR sine table
-		LEA.L	Positions+8(PC),a4	; APTR coordinates
+		MOVEQ	#4-1,d7			; Doing 4 coordinates
 
-		MOVEQ	#2-1,d7			; Doing 2 coordinates
 .NextSinePos	MOVEQ	#0,d0			; Ensure top bits are clear
 		MOVE.B	(a0),d0			; Get previous position
 		ADDQ.B	#1,d0			; Move to next position
 		MOVE.B	d0,(a0)+		; Store new position
 		MOVE.B	(a1,d0.W),d0		; Get sine value at position
 		EXT.W	d0			; Value between -127 and 127
-		ADD.W	#158,d0			; Value between 30 and 305
-		MOVE.W	d0,(a4)+		; Store in positions table
-		ADDA.W	#2,a4
+		ADD.W	#128,d0			; Value between 1 and 255
+		MOVE.W	d0,-(a7)		; Store on the stack
 		DBF	d7,.NextSinePos		; Do them all
 
-		BSR.B	DrawLines		; Draw lines on mem playfield
-		BSR.B	FillCopy		; Copy to screen playfield and fill
-		BSR.B	DrawLines		; Draw lines again to remove them
-
-		RTS
-
-;-----------------------------------------------------------
-
-DrawLines:	LEA.L	Positions(PC),a4	; APTR position table
-		MOVEQ	#2-1,d7			; Drawing 2 lines
-.NextLine	MOVE.W	(a4)+,d0		; Line start X
-		MOVE.W	(a4)+,d1		; Line start Y
-		MOVE.W	(a4)+,d2		; Line end X
-		MOVE.W	(a4)+,d3		; Line end Y
+		MOVE.W	(a7)+,d3		; Y position 2
+		MOVE.W	(a7)+,d2		; X position 2
+		MOVE.W	(a7)+,d1		; Y position 1
+		MOVE.W	(a7)+,d0		; X position 1
 		BSR.B	DrawLine		; Draw the line
-		DBF	d7,.NextLine		; Get on with the next one
 		RTS
-
 
 ;-----------------------------------------------------------
 
-Positions:	DC.W	20,20,20,100,100,20,100,100
-SinePos:	DC.B	128,0
-
-
-;-----------------------------------------------------------
-; INPUT:	Nothing
-;
-; TRASH:	D0,A0,A1
-
-FillCopy:	LEA.L	BitplaneMem,a0		; APTR bitplane to copy from
-		ADDA.W	#110*40,a0		; Descending mode: start at end
-		LEA.L	BitplaneScr,a1		; APTR bitplane to copy to
-		ADDA.W	#110*40,a1		; Descending mode: start at end
-
-		BTST.B	#14-8,DMACONR(a5)	; Dummy read
-.BltBusy	BTST.B	#14-8,DMACONR(a5)	; Blitter ready?
-		BNE.B	.BltBusy		; No. Wait a bit
-
-		MOVEQ	#$0002,d0		; Set descending mode bit
-		BTST	#7,CIAAPRA		; Check for joystick fire button
-		BEQ.B	.NoFill			; Pressed? Do not fill
-		MOVEQ	#$000A,d0		; Inclusive fill + descending mode
-
-.NoFill		MOVE.L	a0,BLTAPT(a5)		; Source A  = playfield
-		MOVE.L	a1,BLTDPT(a5)		; Destination = playfield
-		MOVE.W	#$FFFF,BLTAFWM(a5)	; No first word masking
-		MOVE.W	#$FFFF,BLTALWM(a5)	; No last word masking
-		MOVE.W	#$09F0,BLTCON0(a5)	; USEA, USED. Minterm $F0, D=A
-		MOVE.W	d0,BLTCON1(a5)		; Fill mode + descending mode
-		MOVE.W	#0,BLTDMOD(a5)		; Skip 0 bytes of the destination
-		MOVE.W	#0,BLTAMOD(a5)		; Skip 0 bytes of the source
-		MOVE.W	#110<<6+20,BLTSIZE(a5)	; 110 lines high, 20 words wide
-		RTS
+SinePos:	DC.B	64,0,128,64
 
 
 ;-----------------------------------------------------------
@@ -211,7 +165,7 @@ DrawLine:	SUB.W	d0,d2			; D2 = Dx = X1 - X2
 .DoneOctant	ADD.W	d2,d2			; D2 = 2 * Dmax	
 		ASL.W	#2,d3			; D3 = 4 * Dmin
 
-		LEA.L	BitplaneMem,a0		; APTR bitplane to draw on
+		LEA.L	Bitplane,a0		; APTR bitplane to draw on
 		MULU	#40,d1			; Convert Y1 pos into offset
 		ADD.L	d1,a0			; Add ofset to bitplane pointer
 		EXT.L	d0			; Clear top bits of D0
@@ -219,7 +173,7 @@ DrawLine:	SUB.W	d0,d2			; D2 = Dx = X1 - X2
 		ADD.W	d0,d0			; Bottom word: convert to byte offset 
 		ADDA.W	d0,a0			; Add byte offset to bitplane pointer
 		SWAP	d0			; Move shift value to bottom word
-		OR.W	#$0B5A,d0		; USEA, C and D. Minterm $5A, D=A+C
+		OR.W	#$0B5A,d0		; USEA, C and D. Minterm $5A, D=A/C+/AC
 
 		MOVE.W	d2,d1			; D1 = 2 * Dmax
 		LSL.W	#5,d1			; Shift Dmax to Hx pos for BLTSIZE
@@ -244,8 +198,7 @@ DrawLine:	SUB.W	d0,d2			; D2 = Dx = X1 - X2
 		MOVE.L	d3,BLTAPT(a5)		; Store in A pointer
 		BPL.B	.NotNeg			; Skip if positive
 		OR.W	#$0040,d4		; Set SIGN bit if negative
-.NotNeg		ADDQ.W	#2,d4			; Use single bit per line mode
-		MOVE.W	d4,BLTCON1(a5)		; Octant selection, SIGN and LINE
+.NotNeg		MOVE.W	d4,BLTCON1(a5)		; Octant selection, SIGN and LINE
 		SUB.W	d2,d3			; D2 = (2*Dmax), D3 = (2*Dmax)-(4*Dmin)
 		MOVE.W	d3,BLTAMOD(a5)		; D3 = 4 * (DMax - Dmin)
 		MOVE.W	d1,BLTSIZE(a5)		; Set length and start the Blitter
@@ -264,7 +217,7 @@ Coplist:	DC.W	BPL1PTH,0	; High word APTR bitplane 1
 ;-----------------------------------------------------------
 ; Only data required is the sine table
 
-Sine:		INCLUDE	"BareMetal:Include/Sine256B.i"
+Sine:		INCLUDE	"../Include/Sine256B.i"
 
 
 ;-----------------------------------------------------------
@@ -272,7 +225,6 @@ Sine:		INCLUDE	"BareMetal:Include/Sine256B.i"
 
 		SECTION	BitPlane,BSS_C
 
-BitplaneScr:	DS.B	(320*256/8)
-BitplaneMem:	DS.B	(320*256/8)
+Bitplane:	DS.B	(320*256/8)
 
 ;-----------------------------------------------------------

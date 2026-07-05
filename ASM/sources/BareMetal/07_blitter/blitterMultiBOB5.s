@@ -21,20 +21,20 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
+		INCLUDE	"../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 
 		SECTION	Code,CODE_C		
 
-		INCLUDE	"BareMetal:Include/SafeStart.i"
+		INCLUDE	"../Include/SafeStart.i"
 
 Main:		LEA.L	Coplist(PC),a0		; 
 		MOVE.L	a0,COP1LC(a5)		; Set start address for coplist
 
 ; Setup the bitplane pointers in the coplist
 
-		LEA.L	Background(PC),a1	; APTR Start of bitplane 1
+		LEA.L	Playfield(PC),a1	; APTR Start of bitplane 1
 		MOVE.L	a1,d0
 		MOVE.W	d0,6(a0)		; Place low word into coplist
 		SWAP	d0
@@ -67,17 +67,17 @@ Main:		LEA.L	Coplist(PC),a0		;
 
 		MOVE.W	#$81C0,DMACON(a5)	; Enable bitplane, Copper and Blitter DMA
 
-		MOVE.W	PrevPos(PC),d0
-		MOVE.W	PrevPos+2(PC),d1
-		LEA.L	ObjectStore,a0
-		BSR	PrepBOB
+; Prepare Blitter registers that won't change
+
+		MOVE.W	#$FFFF,BLTAFWM(a5)	; No first word masking
+		MOVE.W	#$FFFF,BLTALWM(a5)	; No last word masking
 
 ; Wait for the user to click the mouse	
 
 .WaitLoop	MOVE.L	VPOSR(a5),d0		; Get VPOSR and VHPOSR 
 		LSR.L	#8,d0			; Shift vertical pos to lowest 9 bits
 		AND.W	#$01FF,d0		; Remove unwanted bits
-		CMP.W	#$0001,d0		; On line 1?
+		CMP.W	#$0100,d0		; On line $100?
 		BNE.B	.Skip			; No? Do nothing
 
 		BSR.B	MoveBOB
@@ -85,8 +85,8 @@ Main:		LEA.L	Coplist(PC),a0		;
 .Wait		MOVE.L	VPOSR(a5),d0		; Get vertical an horizontal position
 		LSR.L	#8,d0			; Shift vertical pos to lowest 9 bits
 		AND.W	#$01FF,d0		; Remove unwanted bits
-		CMP.W	#$0001,d0		; On line 1?
-		BEQ.B	.Wait			; Wait until no longer on line 1
+		CMP.W	#$0100,d0		; On line $100?
+		BEQ.B	.Wait			; Wait until no longer on line $100
 
 .Skip		BTST	#6,CIAAPRA		; Check for left mouse click
 		BNE.B	.WaitLoop		; No click, keep testing
@@ -95,68 +95,48 @@ Main:		LEA.L	Coplist(PC),a0		;
 
 ;-----------------------------------------------------------
 
-MoveBOB:	MOVE.W	PrevPos(PC),d0
-		MOVE.W	PrevPos+2(PC),d1
-		LEA.L	ObjectStore,a0
-		BSR.W	ClearBOB
+MoveBOB:	LEA.L	Positions(PC),a4	; Positions array
+		MOVEQ	#4-1,d7			; Do 3 BOBs
+.ClearNext	MOVE.W	(a4)+,d0		; X position
+		MOVE.W	(a4)+,d1		; Y position
+		BSR.W	ClearBOB		; Restore BOB 1 background
+		DBF	d7,.ClearNext		; Do this for all BOBs
 
-		LEA.L	Sine(PC),a0
-		MOVEQ	#0,d0
-		MOVE.B	SinePos(PC),d0
-		ADDQ.B	#1,d0
-		MOVE.B	d0,SinePos
-		MOVE.B	(a0,d0.W),d0
-		EXT.W	d0
-		ADD.W	#128,d0
-		MOVE.W	d0,PrevPos
+; Calculate new X and Y positions
 
-		MOVEQ	#0,d1
-		MOVE.B	SinePos+1(PC),d1
-		ADDQ.B	#2,d1
-		MOVE.B	d1,SinePos+1
-		MOVE.B	(a0,d1.W),d1
-		EXT.W	d1
-		ASR	d1
-		ADD.W	#64,d1
-		MOVE.W	d1,PrevPos+2
+		LEA.L	Sine(PC),a0		; APTR Sine table
+		LEA.L	SinePos(PC),a1		; APTR array with sine positions
+		LEA.L	Positions(PC),a4	; APTR array with x/y positions
+		MOVEQ	#4-1,d7			; Do 4 BOBs
+.CalcPos	MOVEQ	#0,d0			; Clear all bits of D0
+		MOVE.B	(a1),d0			; Get position in sine table
+		ADDQ.B	#1,d0			; Move on to next position
+		MOVE.B	d0,(a1)+		; Store new sine table position
+		MOVE.B	(a0,d0.W),d0		; Get new sine value
+		EXT.W	d0			; Extend BYTE sine to WORD
+		ADD.W	#128,d0			; Make sine move between 0 and 256
+		MOVE.W	d0,(a4)+		; Store as new X position
+		MOVEQ	#0,d0			; Clear d0 again
+		MOVE.B	(a1),d0			; Get position in sine table
+		ADDQ.B	#2,d0			; Move on 2 positions
+		MOVE.B	d0,(a1)+		; Store new sine table position
+		MOVE.B	(a0,d0.W),d0		; Get new sine value
+		EXT.W	d0			; Extend BYTE sine to WORD
+		ASR	d0			; Make sine move between -64 and 64
+		ADD.W	#64,d0			; Make sine move between 0 and 128
+		MOVE.W	d0,(a4)+		; Store as new Y position
+		DBF	d7,.CalcPos		; Do this for all BOBs
 
-		LEA.L	ObjectStore,a0
-		BSR.B	PrepBOB
+; Place the BOBs
 
-		MOVE.W	PrevPos(PC),d0
-		MOVE.W	PrevPos+2(PC),d1
-		LEA.L	Object(PC),a0		; APTR object
+		LEA.L	Positions(PC),a4	; Positions array
+		MOVEQ	#4-1,d7			; Do 4 BOBs
+.PlaceNext	MOVE.W	(a4)+,d0		; X position
+		MOVE.W	(a4)+,d1		; Y position
+		LEA.L	Object(PC),a0		; APTR BOB
 		LEA.L	ObjectMask(PC),a1	; APTR mask
-		BSR.B	PlaceBOB
-
-		RTS
-
-
-;-----------------------------------------------------------
-; INPUT:	A0   - APTR Storage space
-; 		D0.W - X pos (hor) 
-; 		D1.W - Y pos (vert) 
-
-PrepBOB:	LEA.L	Background(PC),a1	; APTR interleaved playfield
-		MULU	#80,d1			; Convert Y pos into offset
-		ADD.L	d1,a1			; Add offset to destination
-		AND.W	#$FFF0,d0		; Position without shift
-		LSR.W	#3,d0			; Convert to byte offset
-		ADDA.W	d0,a1			; Add ofset to destination
-
-		BTST.B	#14-8,DMACONR(a5)	; Dummy read
-.BltBusy	BTST.B	#14-8,DMACONR(a5)	; Blitter ready?
-		BNE.B	.BltBusy		; No. Wait a bit
-
-		MOVE.L	a1,BLTAPT(a5)		; Source A = playfield
-		MOVE.L	a0,BLTDPT(a5)		; Destination = storage
-		MOVE.W	#$FFFF,BLTAFWM(a5)	; No first word masking
-		MOVE.W	#$FFFF,BLTALWM(a5)	; No last word masking
-		MOVE.W	#$09F0,BLTCON0(a5)	; USEA, USED. Minterm $F0, D=A
-		MOVE.W	#0,BLTCON1(a5)		; Data transfer, no fills
-		MOVE.W	#0,BLTDMOD(a5)		; Skip 0 bytes of the storage
-		MOVE.W	#30,BLTAMOD(a5)		; Skip 30 bytes of the playfield
-		MOVE.W	#128<<6+5,BLTSIZE(a5)	; 128 lines high, 5 words wide
+		BSR.B	PlaceBOB		; Draw BOB 
+		DBF	d7,.PlaceNext		; Do this for all BOBs
 
 		RTS
 
@@ -167,7 +147,7 @@ PrepBOB:	LEA.L	Background(PC),a1	; APTR interleaved playfield
 ; 		D0.W - X pos (hor) 
 ; 		D1.W - Y pos (vert) 
 
-PlaceBOB:	LEA.L	Background(PC),a2	; APTR interleaved playfield
+PlaceBOB:	LEA.L	Playfield(PC),a2	; APTR interleaved playfield
 		MULU	#80,d1			; Convert Y pos into offset
 		ADD.L	d1,a2			; Add offset to destination
 		EXT.L	d0			; Clear top bits of D0
@@ -184,10 +164,8 @@ PlaceBOB:	LEA.L	Background(PC),a2	; APTR interleaved playfield
 		MOVE.L	a0,BLTBPT(a5)		; Source B = Object
 		MOVE.L	a2,BLTCPT(a5)		; Source C = Background
 		MOVE.L	a2,BLTDPT(a5)		; Destination = Background
-		MOVE.W	#$FFFF,BLTAFWM(a5)	; No first word masking
-		MOVE.W	#$FFFF,BLTALWM(a5)	; No last word masking
 		MOVE.W	d0,BLTCON1(a5)		; Use shift for source B
-		OR.W	#$0FCA,d0		; USEA,B, C and D. Minterm $CA, D=AB+/AC
+		OR.W	#$0FCA,d0		; USEA, B, C and D. Minterm $CA, D=AB+/AC
 		MOVE.W	d0,BLTCON0(a5)		; 	
 		MOVE.W	#0,BLTAMOD(a5)		; Skip 0 bytes of the mask
 		MOVE.W	#0,BLTBMOD(a5)		; Skip 0 bytes of the object
@@ -203,34 +181,33 @@ PlaceBOB:	LEA.L	Background(PC),a2	; APTR interleaved playfield
 ; 		D0.W - X pos (hor) 
 ; 		D1.W - Y pos (vert) 
 
-ClearBOB:	LEA.L	Background(PC),a1	; APTR interleaved playfield
+ClearBOB:	LEA.L	Background(PC),a0	; APTR undamaged background
+		LEA.L	Playfield(PC),a1	; APTR interleaved playfield
 		MULU	#80,d1			; Convert Y pos into offset
-		ADD.L	d1,a1			; Add offset to destination
 		AND.W	#$FFF0,d0		; Position without shift
 		LSR.W	#3,d0			; Convert to byte offset
-		ADDA.W	d0,a1			; Add ofset to destination
+		ADD.L	d1,d0			; Add both offsets together
+		ADDA.W	d0,a0			; Add ofset to background
+		ADDA.W	d0,a1			; Add ofset to playfield
 
 		BTST.B	#14-8,DMACONR(a5)	; Dummy read
 .BltBusy	BTST.B	#14-8,DMACONR(a5)	; Blitter ready?
 		BNE.B	.BltBusy		; No. Wait a bit
 
-		MOVE.L	a0,BLTAPT(a5)		; Source A = storage
+		MOVE.L	a0,BLTAPT(a5)		; Source A = background
 		MOVE.L	a1,BLTDPT(a5)		; Destination = playfield
-		MOVE.W	#$FFFF,BLTAFWM(a5)	; No first word masking
-		MOVE.W	#$FFFF,BLTALWM(a5)	; No last word masking
 		MOVE.W	#$09F0,BLTCON0(a5)	; USEA, USED. Minterm $F0, D=A
 		MOVE.W	#0,BLTCON1(a5)		; Data transfer, no fills
 		MOVE.W	#30,BLTDMOD(a5)		; Skip 30 bytes of the playfield
-		MOVE.W	#0,BLTAMOD(a5)		; Skip 0 bytes of the storage
+		MOVE.W	#30,BLTAMOD(a5)		; Skip 30 bytes of the storage
 		MOVE.W	#128<<6+5,BLTSIZE(a5)	; 128 lines high, 5 words wide
 
 		RTS
 
-
 ;-----------------------------------------------------------
 
-SinePos:	DC.B	64,0
-PrevPos:	DC.W	0,0
+SinePos:	DC.B	64,0,96,32,128,64,160,96
+Positions:	DC.W	0,0,0,0,0,0,0,0
 
 
 ;-----------------------------------------------------------
@@ -245,18 +222,11 @@ Coplist:	DC.W	BPL1PTH,0	; High word APTR bitplane 1
 
 ;-----------------------------------------------------------
 
-Sine:		INCLUDE	"BareMetal:Include/Sine256B.i"
+Sine:		INCLUDE	"../Include/Sine256B.i"
 
-Object:		INCBIN	"BareMetal:Assets/ChickenLips.RAWB"
-ObjectMask:	INCBIN	"BareMetal:Assets/ChickenLipsMask.RAWB"
-
-Background:	INCBIN	"BareMetal:Assets/Background.RAWB"
-
-
-;-----------------------------------------------------------
-
-		SECTION	BitPlane,BSS_C
-
-ObjectStore:	DS.B	(80*64*2)/8
+Object:		INCBIN	"../Assets/ChickenLips.RAWB"
+ObjectMask:	INCBIN	"../Assets/ChickenLipsMask.RAWB"
+Background:	INCBIN	"../Assets/Background.RAWB"
+Playfield:	INCBIN	"../Assets/Background.RAWB"
 
 ;-----------------------------------------------------------

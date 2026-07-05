@@ -31,7 +31,7 @@ Close		EQU	-36
 Write  		EQU	-48
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
+		INCLUDE	"../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 
@@ -207,7 +207,7 @@ DecLong:	MOVE.L	(a0)+,d0		; D0 = Odd bits
 ; At the end of Main the code will RTS back into SafeStart
 ; SafeStart will start the OS again and RTS back to the caller
 
-GetTrack:	INCLUDE	"BareMetal:Include/SafeStart.i"
+GetTrack:	INCLUDE	"../Include/SafeStart.i"
 
 
 Main:		BSR.B	StartDf0		; Start drive 0

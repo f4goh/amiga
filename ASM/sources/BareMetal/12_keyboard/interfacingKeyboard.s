@@ -38,13 +38,13 @@
 ;
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
+		INCLUDE	"../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 
 		SECTION	Code,CODE
 
-		INCLUDE	"BareMetal:Include/SafeStart.i"
+		INCLUDE	"../Include/SafeStart.i"
 
 ; Backup the two IRQ vectors since these are not done by SafeStart.i
 

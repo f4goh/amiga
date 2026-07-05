@@ -21,13 +21,13 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
+		INCLUDE	"../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 
 		SECTION	Code,CODE_C		
 
-		INCLUDE	"BareMetal:Include/SafeStart.i"
+		INCLUDE	"../Include/SafeStart.i"
 
 Main:		LEA.L	CopBPL(PC),a0		; APTR to bitplane ptrs in coplist
 		LEA.L	Bitplanes,a1		; APTR Start of bitplane 1
@@ -227,7 +227,7 @@ CopDelay:	DC.W	BPLCON1,0	; Delay for odd/even bitplanes
 
 ;-----------------------------------------------------------
 		
-Font:		INCBIN	"BareMetal:Assets/Font32.RAW"
+Font:		INCBIN	"../Assets/Font32.RAW"
 
 ;-----------------------------------------------------------
 

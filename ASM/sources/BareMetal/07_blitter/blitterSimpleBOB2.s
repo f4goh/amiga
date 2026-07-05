@@ -21,13 +21,13 @@
 ; SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-		INCLUDE	"BareMetal:Include/BareMetal.i"
+		INCLUDE	"../Include/BareMetal.i"
 
 ;-----------------------------------------------------------
 
 		SECTION	Code,CODE_C		
 
-		INCLUDE	"BareMetal:Include/SafeStart.i"
+		INCLUDE	"../Include/SafeStart.i"
 
 Main:		LEA.L	Coplist(PC),a0		; 
 		MOVE.L	a0,COP1LC(a5)		; Set start address for coplist
@@ -213,8 +213,8 @@ Coplist:	DC.W	BPL1PTH,0	; High word APTR bitplane 1
 
 ;-----------------------------------------------------------
 
-Sine:		INCLUDE	"BareMetal:Include/Sine256B.i"
-Object:		INCBIN	"BareMetal:Assets/ChickenLips.RAW"
+Sine:		INCLUDE	"../Include/Sine256B.i"
+Object:		INCBIN	"../Assets/ChickenLips.RAW"
 
 
 ;-----------------------------------------------------------
