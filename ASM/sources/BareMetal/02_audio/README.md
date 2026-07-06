@@ -523,7 +523,7 @@ BSET.B  #1,CIAAPRA
 - Impact global sur toute la sortie audio
 ---
 
-# Cartographie des registres Audio (Amiga 500 OCS)
+# Cartographie des registres Audio
 
 | Canal | AUDxLCH/LCL | AUDxLEN | AUDxPER | AUDxVOL | AUDxDAT |
 |------:|-------------|----------|----------|----------|----------|
@@ -547,7 +547,7 @@ BSET.B  #1,CIAAPRA
 
 ---
 
-# Exemple assembleur corrigé (Amiga 500)
+# Exemple assembleur (Amiga 500)
 
 ```asm
         LEA     $DFF000,A5
