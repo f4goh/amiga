@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Amiga Graphic Studio</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+    <h1>AMIGA GRAPHIC STUDIO</h1>
+    <div class="version">
+        PNG → Bitplanes → Copper
+        <br>
+        Amiga 500 OCS/ECS
+    </div>
+</header>
+
+
+<nav class="toolbar">
+
+    <label class="button">
+        Ouvrir PNG
+        <input 
+            type="file" 
+            id="pngFile"
+            accept="image/png"
+            hidden>
+    </label>
+
+    <button id="btnReload">
+        Recharger
+    </button>
+
+    <button id="btnRaw">
+        Export RAW
+    </button>
+
+    <button id="btnCop">
+        Export COP
+    </button>
+
+    <button id="btnAsm">
+        Export ASM
+    </button>
+
+</nav>
+
+
+
+<main>
+
+
+<!-- ===========================
+     ZONE IMAGE
+=========================== -->
+
+<section class="image-area">
+
+
+<div class="preview-box">
+
+<h2>Image originale</h2>
+
+<canvas id="originalCanvas">
+</canvas>
+
+<div class="zoom-control">
+
+Zoom :
+
+<select id="zoomSelect">
+
+<option value="1">
+x1
+</option>
+
+<option value="2">
+x2
+</option>
+
+<option value="4">
+x4
+</option>
+
+<option value="8">
+x8
+</option>
+
+<option value="16">
+x16
+</option>
+
+</select>
+
+<input type="checkbox" id="gridCheck">
+<label for="gridCheck">Grille pixels</label>
+
+</div>
+
+</div>
+
+
+
+
+<div class="preview-box">
+
+<h2>Aperçu Amiga RGB4</h2>
+
+<canvas id="amigaCanvas">
+</canvas>
+
+
+<div class="display-info">
+
+<span>
+Largeur :
+<b id="imgWidth">---</b>
+</span>
+
+<span>
+Hauteur :
+<b id="imgHeight">---</b>
+</span>
+
+<span>
+Couleurs :
+<b id="colorCount">---</b>
+</span>
+
+<span>
+Bitplanes :
+<b id="planeCount">5</b>
+</span>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ===========================
+     PALETTE
+=========================== -->
+
+
+<section class="panel">
+
+<h2>
+Palette Amiga RGB4
+</h2>
+
+
+<div id="paletteView">
+
+</div>
+
+
+<div class="color-editor">
+
+
+<label>
+R
+<input 
+type="number"
+id="editR"
+min="0"
+max="15"
+value="0">
+</label>
+
+
+<label>
+G
+<input 
+type="number"
+id="editG"
+min="0"
+max="15"
+value="0">
+</label>
+
+
+<label>
+B
+<input 
+type="number"
+id="editB"
+min="0"
+max="15"
+value="0">
+</label>
+
+
+<button id="applyColor">
+Modifier
+</button>
+
+
+</div>
+
+
+</section>
+<!-- ===========================
+     BITPLANES
+=========================== -->
+
+<section class="panel">
+
+<h2>
+Bitplanes Amiga 500 OCS/ECS
+</h2>
+
+
+<div class="bitplane-container">
+
+
+<div class="plane-box">
+
+<h3>
+Plane 0
+</h3>
+
+<canvas id="plane0Canvas">
+</canvas>
+
+<label>
+<input 
+type="checkbox"
+id="showPlane0"
+checked>
+
+Afficher
+
+</label>
+
+</div>
+
+
+
+<div class="plane-box">
+
+<h3>
+Plane 1
+</h3>
+
+<canvas id="plane1Canvas">
+</canvas>
+
+<label>
+<input 
+type="checkbox"
+id="showPlane1"
+checked>
+
+Afficher
+
+</label>
+
+</div>
+
+
+
+
+<div class="plane-box">
+
+<h3>
+Plane 2
+</h3>
+
+<canvas id="plane2Canvas">
+</canvas>
+
+<label>
+<input 
+type="checkbox"
+id="showPlane2"
+checked>
+
+Afficher
+
+</label>
+
+</div>
+
+
+
+
+<div class="plane-box">
+
+<h3>
+Plane 3
+</h3>
+
+<canvas id="plane3Canvas">
+</canvas>
+
+<label>
+<input 
+type="checkbox"
+id="showPlane3"
+checked>
+
+Afficher
+
+</label>
+
+</div>
+
+
+
+
+<div class="plane-box">
+
+<h3>
+Plane 4
+</h3>
+
+<canvas id="plane4Canvas">
+</canvas>
+
+<label>
+<input 
+type="checkbox"
+id="showPlane4"
+checked>
+
+Afficher
+
+</label>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ===========================
+     OPTIONS CONVERSION
+=========================== -->
+
+
+<section class="panel">
+
+
+<h2>
+Options conversion
+</h2>
+
+
+
+<div class="options-grid">
+
+
+
+<div class="option-box">
+
+
+<h3>
+Bitplanes
+</h3>
+
+
+<label>
+Nombre de plans :
+
+<select id="depthSelect">
+
+<option value="1">
+1 bitplane
+</option>
+
+<option value="2">
+2 bitplanes
+</option>
+
+<option value="3">
+3 bitplanes
+</option>
+
+<option value="4">
+4 bitplanes
+</option>
+
+<option value="5" selected>
+5 bitplanes
+</option>
+
+</select>
+
+</label>
+
+
+</div>
+
+
+
+
+
+<div class="option-box">
+
+
+<h3>
+Organisation mémoire
+</h3>
+
+
+<label>
+
+<input 
+type="radio"
+name="storage"
+id="planarMode"
+checked>
+
+Planar
+
+</label>
+
+
+<br>
+
+
+<label>
+
+<input 
+type="radio"
+name="storage"
+id="interleavedMode">
+
+Interleaved
+
+</label>
+
+
+</div>
+
+
+
+
+
+<div class="option-box">
+
+
+<h3>
+Réduction couleurs
+</h3>
+
+
+<label>
+
+Couleurs :
+
+<select id="colorSelect">
+
+<option value="2">
+2
+</option>
+
+<option value="4">
+4
+</option>
+
+<option value="8">
+8
+</option>
+
+<option value="16">
+16
+</option>
+
+<option value="32" selected>
+32
+</option>
+
+</select>
+
+</label>
+
+
+</div>
+
+
+
+
+
+<div class="option-box">
+
+
+<h3>
+Dithering
+</h3>
+
+
+<select id="ditherSelect">
+
+
+<option value="none">
+Aucun
+</option>
+
+
+<option value="ordered">
+Ordered Bayer
+</option>
+
+
+<option value="floyd">
+Floyd Steinberg
+</option>
+
+
+<option value="atkinson">
+Atkinson
+</option>
+
+
+<option value="jarvis">
+Jarvis
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- ===========================
+     COPPER OPTIONS
+=========================== -->
+
+
+<section class="panel">
+
+
+<h2>
+Copper List
+</h2>
+
+
+
+<div class="options-grid">
+
+
+
+<div class="option-box">
+
+
+<label>
+
+<input 
+type="checkbox"
+id="enableCopper"
+checked>
+
+Générer Copper List
+
+</label>
+
+
+</div>
+
+
+
+
+
+<div class="option-box">
+
+
+<h3>
+Format Copper
+</h3>
+
+
+<select id="copperFormat">
+
+
+<option value="ascii">
+ASCII
+</option>
+
+
+<option value="asm">
+ASM Amiga
+</option>
+
+
+<option value="hex">
+HEX
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="option-box">
+
+
+<h3>
+Couleurs Copper
+</h3>
+
+
+<select id="rgbMode">
+
+
+<option value="rgb4" selected>
+RGB4 ($RGB)
+</option>
+
+
+<option value="rgb12">
+RGB12
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+<div class="option-box">
+
+
+<label>
+
+<input 
+type="checkbox"
+id="picconMode">
+
+Compatibilité PicCon
+
+</label>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+<!-- ===========================
+     REGISTRES AMIGA
+=========================== -->
+
+
+<section class="panel">
+
+
+<h2>
+Configuration écran Amiga
+</h2>
+
+
+<div class="register-grid">
+
+
+
+<div class="register-box">
+
+<h3>
+Display Window
+</h3>
+
+
+<label>
+DIWSTRT
+
+<input 
+type="text"
+id="diwstrt"
+value="$2C81">
+
+</label>
+
+
+
+<label>
+DIWSTOP
+
+<input 
+type="text"
+id="diwstop"
+value="$2CC1">
+
+</label>
+
+
+</div>
+
+
+
+
+
+<div class="register-box">
+
+
+<h3>
+Display Data Fetch
+</h3>
+
+
+<label>
+DDFSTRT
+
+<input 
+type="text"
+id="ddfstrt"
+value="$0038">
+
+</label>
+
+
+
+<label>
+DDFSTOP
+
+<input 
+type="text"
+id="ddfstop"
+value="$00D0">
+
+</label>
+
+
+
+</div>
+
+
+
+
+
+<div class="register-box">
+
+
+<h3>
+Bitplane Control
+
+
+</h3>
+
+
+<label>
+
+BPLCON0
+
+<input 
+type="text"
+id="bplcon0"
+value="$5200">
+
+</label>
+
+
+<label>
+
+BPLCON1
+
+<input 
+type="text"
+id="bplcon1"
+value="$0000">
+
+</label>
+
+
+<label>
+
+BPLCON2
+
+<input 
+type="text"
+id="bplcon2"
+value="$0000">
+
+</label>
+
+
+</div>
+
+
+
+
+
+<div class="register-box">
+
+
+<h3>
+Modulos</h3>
+
+
+<label>
+
+BPL1MOD
+
+<input 
+type="text"
+id="bpl1mod"
+value="$0000">
+
+</label>
+
+
+<label>
+
+BPL2MOD
+
+<input 
+type="text"
+id="bpl2mod"
+value="$0000">
+
+</label>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ===========================
+     MEMOIRE CHIP RAM
+=========================== -->
+
+
+<section class="panel">
+
+
+<h2>
+Mémoire Chip RAM
+</h2>
+
+
+
+<div class="memory-view">
+
+
+<div class="memory-item">
+
+<span>
+Palette
+</span>
+
+<div class="memory-bar">
+
+<div 
+id="paletteMemory">
+</div>
+
+</div>
+
+
+<b id="paletteSize">
+0 octets
+</b>
+
+
+</div>
+
+
+
+
+
+
+<div class="memory-item">
+
+
+<span>
+Bitplanes
+</span>
+
+
+<div class="memory-bar">
+
+<div 
+id="bitmapMemory">
+</div>
+
+</div>
+
+
+<b id="bitmapSize">
+0 octets
+</b>
+
+
+</div>
+
+
+
+
+
+
+<div class="memory-item">
+
+
+<span>
+Copper
+</span>
+
+
+<div class="memory-bar">
+
+<div 
+id="copperMemory">
+</div>
+
+</div>
+
+
+<b id="copperSize">
+0 octets
+</b>
+
+
+</div>
+
+
+
+
+
+<h3>
+
+Total :
+
+<span id="totalMemory">
+0 octets
+</span>
+
+
+</h3>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ===========================
+     COPPER PREVIEW
+=========================== -->
+
+
+<section class="panel">
+
+
+<h2>
+Copper List Preview
+</h2>
+
+
+
+<textarea 
+id="copperPreview"
+readonly
+spellcheck="false">
+
+; Copper list Amiga
+; en attente de conversion
+
+</textarea>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ===========================
+     LOG
+=========================== -->
+
+
+<section class="panel">
+
+
+<h2>
+Console conversion
+</h2>
+
+
+<textarea 
+id="logConsole"
+readonly
+spellcheck="false">
+
+AMIGA GRAPHIC STUDIO
+
+Prêt.
+
+</textarea>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ===========================
+     EXPORTS AVANCES
+=========================== -->
+
+
+<section class="panel">
+
+
+<h2>
+Exports avancés
+</h2>
+
+
+
+<div class="export-grid">
+
+
+<button id="exportRaw">
+Exporter image.raw
+</button>
+
+
+
+<button id="exportCop">
+Exporter image.cop
+</button>
+
+
+
+<button id="exportAsm">
+Exporter source ASM
+</button>
+
+
+
+<button id="exportC">
+Exporter fichier C
+</button>
+
+
+
+<button id="exportHeader">
+Exporter fichier H
+</button>
+
+
+
+<button id="exportPalette">
+Exporter palette
+</button>
+
+
+</div>
+
+
+
+</section>
+<!-- ===========================
+     STATUS BAR
+=========================== -->
+
+
+<footer class="statusbar">
+
+
+<div>
+Etat :
+<span id="statusText">
+En attente
+</span>
+</div>
+
+
+<div>
+
+Amiga 500 OCS/ECS
+
+</div>
+
+
+<div>
+
+PNG → RAW → COP
+
+</div>
+
+
+</footer>
+
+
+
+
+
+<!-- ===========================
+     SCRIPTS
+=========================== -->
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+

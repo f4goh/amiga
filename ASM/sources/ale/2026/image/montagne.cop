@@ -1,0 +1,47 @@
+;================================
+; AMIGA 500 COPPER LIST
+;================================
+
+dc.w DIWSTRT,$2C81
+dc.w DIWSTOP,$2CC1
+dc.w DDFSTRT,$0038
+dc.w DDFSTOP,$00D0
+
+; Copper List Amiga
+; Palette RGB4
+
+dc.w COLOR00,$000
+dc.w COLOR01,$FFF
+dc.w COLOR02,$ACD
+dc.w COLOR03,$121
+dc.w COLOR04,$120
+dc.w COLOR05,$789
+dc.w COLOR06,$8AA
+dc.w COLOR07,$478
+dc.w COLOR08,$444
+dc.w COLOR09,$469
+dc.w COLOR10,$456
+dc.w COLOR11,$69B
+dc.w COLOR12,$146
+dc.w COLOR13,$684
+dc.w COLOR14,$47A
+dc.w COLOR15,$365
+dc.w COLOR16,$774
+dc.w COLOR17,$351
+dc.w COLOR18,$135
+dc.w COLOR19,$445
+dc.w COLOR20,$662
+dc.w COLOR21,$9A5
+dc.w COLOR22,$772
+dc.w COLOR23,$8A6
+dc.w COLOR24,$167
+dc.w COLOR25,$322
+dc.w COLOR26,$A99
+dc.w COLOR27,$042
+dc.w COLOR28,$874
+dc.w COLOR29,$474
+dc.w COLOR30,$797
+dc.w COLOR31,$434
+
+; Fin Copper
+dc.w $FFFF,$FFFE

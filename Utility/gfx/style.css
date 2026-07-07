@@ -1,0 +1,1632 @@
+:root {
+
+    --bg-color: #101010;
+    --panel-color: #1c1c1c;
+    --panel-border: #3b3b3b;
+
+    --green: #00ff66;
+    --green-dark: #009933;
+
+    --text-color: #dddddd;
+
+    --orange: #ffb000;
+    --blue: #0099ff;
+
+    --canvas-bg: #000000;
+
+    --input-bg: #080808;
+
+}
+
+
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+
+
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #202020,
+            #080808
+        );
+
+    color: var(--text-color);
+
+    font-family:
+
+        "Courier New",
+        monospace;
+
+    font-size: 14px;
+
+}
+
+
+
+
+/* ===========================
+   HEADER
+=========================== */
+
+
+header {
+
+    background:
+
+        linear-gradient(
+            180deg,
+            #202020,
+            #111111
+        );
+
+
+    border-bottom:
+
+        2px solid var(--green);
+
+
+    padding: 15px;
+
+    display:
+
+        flex;
+
+    justify-content:
+
+        space-between;
+
+    align-items:
+
+        center;
+
+
+}
+
+
+
+header h1 {
+
+
+    margin: 0;
+
+
+    color:
+
+        var(--green);
+
+
+    font-size:
+
+        28px;
+
+
+    text-shadow:
+
+        0 0 8px var(--green);
+
+
+}
+
+
+
+
+.version {
+
+    text-align:
+
+        right;
+
+
+    color:
+
+        #aaaaaa;
+
+
+    font-size:
+
+        12px;
+
+
+}
+
+
+
+
+
+/* ===========================
+   TOOLBAR
+=========================== */
+
+
+
+.toolbar {
+
+
+    padding:
+
+        10px;
+
+
+    background:
+
+        #151515;
+
+
+    display:
+
+        flex;
+
+
+    gap:
+
+        10px;
+
+
+    border-bottom:
+
+        1px solid #333;
+
+
+}
+
+
+
+
+
+button,
+.button {
+
+
+    background:
+
+        #222;
+
+
+    color:
+
+        var(--green);
+
+
+    border:
+
+        1px solid var(--green-dark);
+
+
+    padding:
+
+        8px 14px;
+
+
+    cursor:
+
+        pointer;
+
+
+    font-family:
+
+        inherit;
+
+
+    transition:
+
+        0.2s;
+
+
+}
+
+
+
+
+
+button:hover,
+.button:hover {
+
+
+    background:
+
+        var(--green-dark);
+
+
+    color:
+
+        white;
+
+
+}
+
+
+
+
+
+
+
+/* ===========================
+   MAIN
+=========================== */
+
+
+
+main {
+
+
+    padding:
+
+        10px;
+
+
+}
+
+
+
+
+
+
+
+/* ===========================
+   PANELS
+=========================== */
+
+
+
+.panel {
+
+
+    background:
+
+        var(--panel-color);
+
+
+    border:
+
+        1px solid var(--panel-border);
+
+
+    border-radius:
+
+        5px;
+
+
+    padding:
+
+        12px;
+
+
+    margin-bottom:
+
+        12px;
+
+
+}
+
+
+
+
+
+.panel h2 {
+
+
+    margin-top:
+
+        0;
+
+
+    color:
+
+        var(--orange);
+
+
+    border-bottom:
+
+        1px solid #444;
+
+
+    padding-bottom:
+
+        5px;
+
+
+}
+
+
+
+
+
+
+
+/* ===========================
+   IMAGE PREVIEW
+=========================== */
+
+
+.image-area {
+
+
+    display:
+
+        grid;
+
+
+    grid-template-columns:
+
+        1fr 1fr;
+
+
+    gap:
+
+        15px;
+
+
+}
+
+
+
+.preview-box {
+
+
+    background:
+
+        #090909;
+
+
+    border:
+
+        1px solid #444;
+
+
+    padding:
+
+        10px;
+
+
+}
+
+
+
+
+
+.preview-box h2 {
+
+
+    color:
+
+        var(--blue);
+
+
+}
+
+
+
+
+canvas {
+
+
+    background:
+
+        var(--canvas-bg);
+
+
+    image-rendering:
+
+        pixelated;
+
+
+    image-rendering:
+
+        crisp-edges;
+
+
+    border:
+
+        1px solid #555;
+
+
+    max-width:
+
+        100%;
+
+
+}
+
+
+
+
+
+.zoom-control {
+
+
+    margin-top:
+
+        10px;
+
+
+    display:
+
+        flex;
+
+
+    gap:
+
+        15px;
+
+
+    align-items:
+
+        center;
+
+
+}
+
+
+
+
+
+/* ===========================
+   INFORMATIONS IMAGE
+=========================== */
+
+
+.display-info {
+
+
+    margin-top:
+
+        10px;
+
+
+    display:
+
+        grid;
+
+
+    grid-template-columns:
+
+        repeat(2,1fr);
+
+
+    gap:
+
+        5px;
+
+
+}
+
+
+.display-info span {
+
+
+    background:
+
+        #050505;
+
+
+    border:
+
+        1px solid #333;
+
+
+    padding:
+
+        5px;
+
+
+}
+
+
+
+
+
+
+
+/* ===========================
+   PALETTE
+=========================== */
+
+
+#paletteView {
+
+
+    display:
+
+        flex;
+
+
+    flex-wrap:
+
+        wrap;
+
+
+    gap:
+
+        5px;
+
+
+    padding:
+
+        10px;
+
+
+    background:
+
+        #000;
+
+
+    border:
+
+        1px solid #444;
+
+
+}
+
+
+
+
+.palette-color {
+
+
+    width:
+
+        32px;
+
+
+    height:
+
+        32px;
+
+
+    border:
+
+        2px solid #555;
+
+
+    cursor:
+
+        pointer;
+
+
+}
+
+
+
+
+
+.palette-color:hover {
+
+
+    border:
+
+        2px solid white;
+
+
+    transform:
+
+        scale(1.15);
+
+
+}
+
+
+
+
+
+
+/* ===========================
+   COLOR EDITOR
+=========================== */
+
+
+
+.color-editor {
+
+
+    display:
+
+        flex;
+
+
+    gap:
+
+        15px;
+
+
+    margin-top:
+
+        10px;
+
+
+    align-items:
+
+        center;
+
+
+}
+
+
+
+
+
+
+
+input,
+select {
+
+
+    background:
+
+        var(--input-bg);
+
+
+    color:
+
+        var(--green);
+
+
+    border:
+
+        1px solid #555;
+
+
+    padding:
+
+        5px;
+
+
+    font-family:
+
+        inherit;
+
+
+}
+
+
+
+
+input:focus,
+select:focus {
+
+
+    border-color:
+
+        var(--green);
+
+
+    outline:
+
+        none;
+
+
+}
+
+
+
+
+
+input[type="number"] {
+
+
+    width:
+
+        60px;
+
+
+}
+
+
+
+
+
+
+/* ===========================
+   BITPLANES
+=========================== */
+
+
+
+.bitplane-container {
+
+
+    display:
+
+        grid;
+
+
+    grid-template-columns:
+
+        repeat(5,1fr);
+
+
+    gap:
+
+        10px;
+
+
+}
+
+
+
+
+.plane-box {
+
+
+    background:
+
+        #080808;
+
+
+    border:
+
+        1px solid #333;
+
+
+    padding:
+
+        8px;
+
+
+    text-align:
+
+        center;
+
+
+}
+
+
+
+
+.plane-box h3 {
+
+
+    color:
+
+        var(--green);
+
+
+    margin:
+
+        5px;
+
+
+}
+
+
+
+.plane-box canvas {
+
+
+    width:
+
+        100%;
+
+
+}
+
+
+
+
+
+
+/* ===========================
+   OPTIONS
+=========================== */
+
+
+.options-grid {
+
+
+    display:
+
+        grid;
+
+
+    grid-template-columns:
+
+        repeat(4,1fr);
+
+
+    gap:
+
+        12px;
+
+
+}
+
+
+
+
+.option-box {
+
+
+    background:
+
+        #090909;
+
+
+    border:
+
+        1px solid #333;
+
+
+    padding:
+
+        10px;
+
+
+}
+
+
+
+
+
+.option-box h3 {
+
+
+    color:
+
+        var(--blue);
+
+
+    margin-top:
+
+        0;
+
+
+}
+
+
+
+
+
+
+
+/* ===========================
+   COPPER
+=========================== */
+
+
+
+#copperPreview {
+
+
+    width:
+
+        100%;
+
+
+    height:
+
+        300px;
+
+
+    background:
+
+        #000;
+
+
+    color:
+
+        #00ff66;
+
+
+    border:
+
+        1px solid #444;
+
+
+    padding:
+
+        10px;
+
+
+    font-family:
+
+        "Courier New",
+        monospace;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===========================
+   REGISTRES AMIGA
+=========================== */
+
+
+.register-grid {
+
+
+    display:
+
+        grid;
+
+
+    grid-template-columns:
+
+        repeat(4,1fr);
+
+
+    gap:
+
+        12px;
+
+
+}
+
+
+
+.register-box {
+
+
+    background:
+
+        #090909;
+
+
+    border:
+
+        1px solid #444;
+
+
+    padding:
+
+        10px;
+
+
+}
+
+
+
+.register-box h3 {
+
+
+    color:
+
+        var(--orange);
+
+
+    margin-top:
+
+        0;
+
+
+}
+
+
+
+
+.register-box label {
+
+
+    display:
+
+        block;
+
+
+    margin-bottom:
+
+        8px;
+
+
+}
+
+
+.register-box input {
+
+
+    width:
+
+        100%;
+
+
+}
+
+
+
+/* ===========================
+   MEMOIRE CHIP RAM
+=========================== */
+
+
+.memory-view {
+
+
+    background:
+
+        #080808;
+
+
+    border:
+
+        1px solid #444;
+
+
+    padding:
+
+        15px;
+
+
+}
+
+
+
+
+.memory-item {
+
+
+    display:
+
+        grid;
+
+
+    grid-template-columns:
+
+        120px 1fr 120px;
+
+
+    gap:
+
+        10px;
+
+
+    align-items:
+
+        center;
+
+
+    margin-bottom:
+
+        12px;
+
+
+}
+
+
+
+.memory-bar {
+
+
+    height:
+
+        20px;
+
+
+    background:
+
+        #222;
+
+
+    border:
+
+        1px solid #555;
+
+
+    overflow:
+
+        hidden;
+
+
+}
+
+
+
+.memory-bar div {
+
+
+    height:
+
+        100%;
+
+
+    width:
+
+        0%;
+
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            #00aa44,
+
+            #00ff66
+
+        );
+
+
+    transition:
+
+        width .3s;
+
+
+}
+
+
+
+
+
+
+#paletteMemory {
+
+
+    background:
+
+        #ffb000;
+
+
+}
+
+
+
+
+#copperMemory {
+
+
+    background:
+
+        #0099ff;
+
+
+}
+
+
+
+
+#totalMemory {
+
+
+    color:
+
+        var(--green);
+
+
+    font-size:
+
+        20px;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===========================
+   LOG CONSOLE
+=========================== */
+
+
+#logConsole {
+
+
+    width:
+
+        100%;
+
+
+    height:
+
+        150px;
+
+
+    background:
+
+        #000;
+
+
+    color:
+
+        #00ff66;
+
+
+    border:
+
+        1px solid #333;
+
+
+    padding:
+
+        10px;
+
+
+    font-family:
+
+        "Courier New",
+        monospace;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===========================
+   EXPORTS
+=========================== */
+
+
+.export-grid {
+
+
+    display:
+
+        grid;
+
+
+    grid-template-columns:
+
+        repeat(3,1fr);
+
+
+    gap:
+
+        10px;
+
+
+}
+
+
+
+
+.export-grid button {
+
+
+    padding:
+
+        12px;
+
+
+    font-size:
+
+        15px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ===========================
+   STATUS BAR
+=========================== */
+
+
+.statusbar {
+
+
+    position:
+
+        fixed;
+
+
+    bottom:
+
+        0;
+
+
+    left:
+
+        0;
+
+
+    right:
+
+        0;
+
+
+    height:
+
+        30px;
+
+
+    background:
+
+        #050505;
+
+
+    border-top:
+
+        1px solid var(--green-dark);
+
+
+    display:
+
+        flex;
+
+
+    justify-content:
+
+        space-between;
+
+
+    align-items:
+
+        center;
+
+
+    padding:
+
+        0 15px;
+
+
+    color:
+
+        #888;
+
+
+    font-size:
+
+        12px;
+
+
+}
+
+
+
+
+
+
+
+
+/* ===========================
+   EFFET ECRAN AMIGA
+=========================== */
+
+
+canvas {
+
+
+    filter:
+
+        contrast(1.05);
+
+
+}
+
+
+
+
+body::after {
+
+
+    content:
+
+        "";
+
+
+    pointer-events:
+
+        none;
+
+
+    position:
+
+        fixed;
+
+
+    inset:
+
+        0;
+
+
+    background:
+
+        repeating-linear-gradient(
+
+            0deg,
+
+            rgba(255,255,255,0.015),
+
+            rgba(255,255,255,0.015) 1px,
+
+            transparent 1px,
+
+            transparent 3px
+
+        );
+
+
+}
+
+
+
+
+
+
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+
+@media(max-width:1100px) {
+
+
+    .image-area {
+
+
+        grid-template-columns:
+
+            1fr;
+
+
+    }
+
+
+
+    .bitplane-container {
+
+
+        grid-template-columns:
+
+            repeat(3,1fr);
+
+
+    }
+
+
+
+    .options-grid {
+
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+
+    }
+
+
+
+    .register-grid {
+
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+
+    }
+
+
+}
+
+
+
+
+
+
+@media(max-width:700px) {
+
+
+    header {
+
+
+        flex-direction:
+
+            column;
+
+
+        gap:
+
+            10px;
+
+
+    }
+
+
+
+    .toolbar {
+
+
+        flex-wrap:
+
+            wrap;
+
+
+    }
+
+
+
+    .bitplane-container {
+
+
+        grid-template-columns:
+
+            1fr;
+
+
+    }
+
+
+
+    .options-grid {
+
+
+        grid-template-columns:
+
+            1fr;
+
+
+    }
+
+
+
+    .register-grid {
+
+
+        grid-template-columns:
+
+            1fr;
+
+
+    }
+
+
+
+    .export-grid {
+
+
+        grid-template-columns:
+
+            1fr;
+
+
+    }
+
+
+
+    .memory-item {
+
+
+        grid-template-columns:
+
+            1fr;
+
+
+    }
+
+
+
+    .statusbar {
+
+
+        display:
+
+            none;
+
+
+    }
+
+
+}
+
+

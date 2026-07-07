@@ -1,5 +1,24 @@
 # Copper
 
+Le **Copper** est un petit coprocesseur vidéo intégré à **Fat Agnus**. Il exécute une liste d'instructions (Copper List) synchronisées avec le balayage de l'écran, sans intervention du 68000 une fois le DMA activé.
+
+---
+
+## Registres principaux
+
+| Registre | Adresse | Fonction |
+|----------|---------|----------|
+| COP1LC | $DFF080 | Adresse de la Copper List principale |
+| COP2LC | $DFF084 | Adresse de la Copper List secondaire |
+| COPJMP1 | $DFF088 | Recharge COP1LC et démarre la liste |
+| COPJMP2 | $DFF08A | Recharge COP2LC et démarre la liste |
+| DMACON | $DFF096 | Activation des DMA (Copper, Blitter, Bitplanes...) |
+
+> Après un reset, il faut charger **COP1LC** (ou **COP2LC**) puis déclencher **COPJMP1** (ou **COPJMP2**) avant d'activer le DMA Copper.
+
+---
+
+
 # COLORxx — Palette Amiga 500 (OCS/ECS)
 
 ## 📍 Adresse
@@ -290,6 +309,256 @@ Ces registres contiennent également une adresse de saut pour une seconde liste 
 Ils fonctionnent comme COP1LC mais pour un second flux d’exécution.
 
 ---
+# Le Copper de l'Amiga
+
+
+# Les trois instructions
+
+Le Copper ne connaît que **3 instructions** :
+
+| Instruction | Fonction |
+|-------------|----------|
+| MOVE | Écrit une valeur dans un registre matériel |
+| WAIT | Attend que le faisceau atteigne une position donnée |
+| SKIP | Saute l'instruction suivante si la condition est vraie |
+
+Chaque instruction est codée sur **2 mots de 16 bits**.
+
+---
+
+# Copper – Détails des instr
+uctions (MOVE / WAIT)
+---
+
+## Instruction MOVE (structure binaire)
+
+Le MOVE écrit une valeur dans un registre matériel.
+
+### Format des 2 mots (16 bits)
+
+| Mot | Bit 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+|-----|--------|----|----|----|----|----|---|---|---|---|---|---|---|---|---|---|
+| Mot 1 (registre) | x | x | x | x | x | x | x | ra8 | ra7 | ra6 | ra5 | ra4 | ra3 | ra2 | ra1 | 0 |
+| Mot 2 (donnée)    | dw15 | dw14 | dw13 | dw12 | dw11 | dw10 | dw9 | dw8 | dw7 | dw6 | dw5 | dw4 | dw3 | dw2 | dw1 | dw0 |
+
+---
+
+### Interprétation
+
+- **Mot 1** : adresse du registre matériel (Fat Agnus / Denise)
+- **Bit 0 = 0** → identifie une instruction MOVE
+- **Mot 2** : valeur 16 bits transférée dans le registre
+
+---
+
+### Exemple
+
+```asm
+dc.w COLOR00,$000F
+```
+
+| Élément | Valeur |
+|----------|--------|
+| Registre | COLOR00 |
+| Valeur | $000F |
+
+---
+
+### Couleurs RVB (rappel)
+
+| Valeur | Couleur |
+|--------|--------|
+| $00F | bleu |
+| $FF0 | jaune |
+| $888 | gris |
+
+---
+
+## Instruction WAIT / SKIP (structure binaire)
+
+Le WAIT bloque le Copper jusqu'à une position du faisceau vidéo.
+
+Le SKIP fonctionne pareil mais saute l'instruction suivante si la condition est vraie.
+
+---
+
+### Format des 2 mots (16 bits)
+
+| Mot | Bit 15 | 14 | 13 | 12 | 11 | 10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+|-----|--------|----|----|----|----|----|---|---|---|---|---|---|---|---|---|---|
+| Mot 1 (position) | vp7 | vp6 | vp5 | vp4 | vp3 | vp2 | vp1 | vp0 | hp8 | hp7 | hp6 | hp5 | hp4 | hp3 | hp2 | hp1 |
+| Mot 2 (masque)   | bfd | vm6 | vm5 | vm4 | vm3 | vm2 | vm1 | vm0 | hm8 | hm7 | hm6 | hm5 | hm4 | hm3 | hm2 | hm1 |
+
+---
+
+### Bit 0 (différence WAIT / SKIP)
+
+| Instruction | Bit 0 Mot 2 |
+|-------------|-------------|
+| WAIT | 0 |
+| SKIP | 1 |
+
+---
+
+### Champs importants
+
+| Champ | Signification |
+|-------|--------------|
+| VP | Position verticale du faisceau |
+| HP | Position horizontale |
+| VM | Masque vertical |
+| HM | Masque horizontal |
+| BFD | Blitter Finished Disable |
+
+---
+
+### Exemple
+
+```asm
+dc.w $780F,$FFFE
+```
+
+| Élément | Valeur |
+|----------|--------|
+| VP | 120 |
+| HP | 0 |
+| Masque | aucun (FFFE) |
+
+---
+
+### Résumé rapide
+
+- MOVE = écriture registre matériel
+- WAIT = synchronisation raster
+- SKIP = WAIT + condition de saut
+- Chaque instruction = 2 mots de 16 bits
+```
+
+
+```
+dc.w registre,valeur
+```
+
+Exemple :
+
+```asm
+dc.w COLOR00,$000F
+```
+
+équivaut à :
+
+```asm
+COLOR00 = $000F
+```
+
+### Format
+
+| Mot 1 | Mot 2 |
+|-------|-------|
+| Adresse du registre matériel (bit 0 = 0) | Donnée 16 bits |
+
+### Exemple
+
+| Mot 1 | Mot 2 | Action |
+|-------|-------|--------|
+| COLOR00 | $000F | Change la couleur 0 |
+
+---
+
+# Instruction WAIT
+
+```
+dc.w position,masque
+```
+
+Exemple :
+
+```asm
+dc.w $780F,$FFFE
+```
+
+Le Copper attend que le faisceau atteigne la position demandée avant de continuer.
+
+### Format du premier mot
+
+| Bits | Signification |
+|------|---------------|
+| VP | Position verticale |
+| HP | Position horizontale |
+| bit 0 = 1 | Identifie un WAIT |
+
+### Format du second mot
+
+| Bits | Signification |
+|------|---------------|
+| VE | Masque vertical |
+| HE | Masque horizontal |
+| BFD | Blitter Finished Disable |
+| bit 0 = 0 | Instruction WAIT |
+
+---
+
+## Exemple
+
+| Instruction | Effet |
+|-------------|-------|
+| `dc.w $780F,$FFFE` | Attend la ligne vidéo 120 |
+| `dc.w $D70F,$FFFE` | Attend la ligne vidéo 215 |
+| `dc.w $FFFF,$FFFE` | Attend la fin de l'écran |
+
+Le masque `$FFFE` signifie généralement :
+
+- comparaison complète de VP et HP ;
+- ne pas masquer les bits de position.
+
+---
+
+# Instruction SKIP
+
+Même format que **WAIT**, mais le bit 0 du second mot vaut **1**.
+
+```
+dc.w position,$FFFF
+```
+
+Si la position actuelle du faisceau est **supérieure ou égale** à celle indiquée, le Copper ignore simplement l'instruction suivante.
+
+---
+
+# Fonctionnement général
+
+Le 68000 :
+
+1. construit la Copper List en mémoire Chip ;
+2. charge son adresse dans **COP1LC** ;
+3. déclenche **COPJMP1** ;
+4. active le DMA Copper via **DMACON**.
+
+Le Copper travaille ensuite de façon autonome, en exécutant les instructions **MOVE**, **WAIT** et **SKIP** au rythme du balayage vidéo.
+
+---
+
+# Exemple de Copper List
+
+```asm
+dc.w COLOR00,$000F
+dc.w $780F,$FFFE
+
+dc.w COLOR00,$00F0
+dc.w $D70F,$FFFE
+
+dc.w COLOR00,$0F00
+dc.w $FFFF,$FFFE
+```
+
+Résultat :
+
+| Ligne vidéo | Action |
+|-------------|--------|
+| Début écran | Couleur bleue |
+| Ligne 120 | Couleur verte |
+| Ligne 215 | Couleur rouge |
+| Fin écran | Fin de la Copper List |
 
 # COPINS
 

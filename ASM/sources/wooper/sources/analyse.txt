@@ -1,0 +1,272 @@
+# Analyse détaillée de la Copper List
+
+---
+
+## Copper List
+
+```asm
+copper:
+    dc.w $0100,$0000
+```
+
+### BPLCON0 ($DFF100)
+
+| Bits | Fonction |
+|------|----------|
+| 15-12 | mode écran |
+| 11 | ECS / HAM / extra modes selon chipset |
+| 10 | dual playfield |
+| 9-8 | bitplanes count (MSB) |
+| 7-0 | configuration display |
+
+👉 Ici : initialisation écran minimale (reset ou base mode)
+
+---
+
+## Setup écran (DIW / DDF)
+
+```asm
+dc.l $008E2C81,$00902CC1,$00920038,$009400D0
+```
+
+---
+
+### DIWSTRT ($DFF08E)
+
+| Bits | Fonction |
+|------|----------|
+| 15-8 | Y start |
+| 7-0  | X start |
+
+👉 valeur : `$2C81`
+
+---
+
+### DIWSTOP ($DFF090)
+
+| Bits | Fonction |
+|------|----------|
+| 15-8 | Y stop |
+| 7-0  | X stop |
+
+👉 valeur : `$2CC1`
+
+---
+
+### DDFSTRT ($DFF092)
+
+| Bits | Fonction |
+|------|----------|
+| 15-0 | start fetch display DMA |
+
+👉 valeur : `$0038`
+
+---
+
+### DDFSTOP ($DFF094)
+
+| Bits | Fonction |
+|------|----------|
+| 15-0 | stop fetch display DMA |
+
+👉 valeur : `$00D0`
+
+---
+
+## Bitplane control registers
+
+```asm
+dc.l $01020000,$01040000,$01080000,$010A0000
+```
+
+---
+
+### BPLCON1 ($DFF102)
+
+| Bits | Fonction |
+|------|----------|
+| 7-4 | horizontal scroll (fine) |
+| 3-0 | horizontal scroll (coarse) |
+
+👉 `$0000` = pas de scroll
+
+---
+
+### BPLCON2 ($DFF104)
+
+| Bits | Fonction |
+|------|----------|
+| 7 | sprites priority |
+| 6 | playfield priority |
+| 5-0 | display mode options |
+
+👉 `$0000` = mode standard
+
+---
+
+### BPLCON3 ($DFF108)
+
+| Bits | Fonction ECS |
+|------|-------------|
+| extension palette / sprite modes |
+
+👉 `$0000`
+
+---
+
+### BPLCON4 ($DFF10A)
+
+| Bits | Extension |
+|------|----------|
+
+👉 `$0000`
+
+---
+
+## Bitplane pointers
+
+```asm
+bmap:
+    dc.l $00E00000,$00E20000
+    dc.l $00E40000,$00E60000
+    dc.l $00E80000,$00EA0000
+    dc.l $00EC0000,$00EE0000
+    dc.l $00F00000,$00F20000
+```
+
+---
+
+### BPLxPT (Bitplane pointers)
+
+| Bitplane | High | Low | Adresse |
+|----------|------|-----|----------|
+| BPL1 | $00E0 | $0000 | $00E00000 |
+| BPL2 | $00E2 | $0000 | $00E20000 |
+| BPL3 | $00E4 | $0000 | $00E40000 |
+| BPL4 | $00E6 | $0000 | $00E60000 |
+| BPL5 | $00E8 | $0000 | $00E80000 |
+| BPL6 | $00EA | $0000 | $00EA0000 |
+| BPL7 | $00EC | $0000 | $00EC0000 |
+| BPL8 | $00EE | $0000 | $00EE0000 |
+| BPL9 | $00F0 | $0000 | $00F00000 |
+| BPL10 | $00F2 | $0000 | $00F20000 |
+
+---
+
+## Synchronisation raster
+
+```asm
+dc.w $2E01,$FFFE
+```
+
+---
+
+### WAIT instruction
+
+| Champ | Valeur |
+|------|--------|
+| VP | ligne $2E = 46 |
+| HP | 0 |
+| Mask | $FFFE |
+
+👉 attend ligne raster 46
+
+---
+
+## Mode écran
+
+```asm
+dc.w $0100,$5200
+```
+
+---
+
+### BPLCON0 ($DFF100)
+
+| Bit | Fonction |
+|-----|----------|
+| 15 | enable |
+| 14 | HAM / ECS selon chipset |
+| 13-12 | mode écran |
+| 11 | dual playfield |
+| 10-0 | bitplanes config |
+
+👉 `$5200` = mode multi-bitplanes actif
+
+---
+
+## Palette couleurs
+
+```asm
+dc.w $0180,$0000   ; COLOR00
+dc.w $0182,$0FFF   ; COLOR01
+dc.w $0184,$0777   ; COLOR02
+...
+```
+
+---
+
+### COLORxx ($DFF180+)
+
+| Registre | Fonction |
+|----------|----------|
+| COLOR00 | couleur 0 |
+| COLOR01 | couleur 1 |
+| COLOR02 | couleur 2 |
+| ... | palette complète |
+
+---
+
+### Exemple palette
+
+| Valeur | Couleur |
+|--------|--------|
+| $0000 | noir |
+| $0FFF | blanc |
+| $0777 | gris moyen |
+| $0AAA | gris clair |
+
+---
+
+## Fin de Copper List
+
+```asm
+dc.l -2
+```
+
+---
+
+### Signification
+
+| Valeur | Rôle |
+|--------|------|
+| $FFFFFFFE | fin Copper List |
+
+👉 boucle infinie du Copper
+
+---
+
+## Résumé global
+
+| Partie | Fonction |
+|--------|----------|
+| DIW / DDF | zone écran |
+| BPLCON | mode vidéo |
+| BPLxPT | bitplanes mémoire |
+| WAIT | raster split |
+| COLORxx | palette |
+| -2 | fin liste |
+
+---
+
+## Conclusion
+
+Cette Copper List :
+
+- configure un écran multi-bitplanes
+- prépare jusqu'à 10 plans mémoire
+- utilise un raster split (ligne 46)
+- charge une palette complète
+- boucle en continu via Copper
+
+👉 typique démo Amiga / moteur graphique custom
