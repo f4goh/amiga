@@ -1,26 +1,39 @@
-# Lire fichiers mod sous linux
+# 🎵 Lire et créer des fichiers MOD sous Linux
 
-# Player online
- 
-[Bassoon Tracker](https://www.stef.be/bassoontracker/)
+Ressources pour écouter, éditer et créer des modules **Amiga MOD** sous Linux.
 
-![Icône bassoon](bassoon.png)
+---
 
+## ▶️ Player MOD en ligne — Bassoon Tracker
 
-# PT2-Clone (ProTracker 2 Clone) sous Ubuntu / Linux
+Un tracker et lecteur MOD directement accessible depuis un navigateur.
 
-## Présentation
+🔗 [Bassoon Tracker](https://www.stef.be/bassoontracker/)
 
-PT2-Clone est une réécriture fidèle de **ProTracker 2.3D**, le célèbre tracker de l'Amiga.
-Il permet de créer et lire des modules au format **MOD** tout en reproduisant très fidèlement le comportement et le son du ProTracker d'origine, avec quelques améliorations modernes.
+![Icône Bassoon Tracker](bassoon.png)
+
+---
+
+## 🎹 PT2-Clone — ProTracker 2 Clone pour Ubuntu / Linux
+
+### Présentation
+
+**PT2-Clone** est une réécriture fidèle de **ProTracker 2.3D**, le célèbre tracker musical de l'Amiga.
+
+Il permet de :
+
+- 🎼 Créer et éditer des modules au format **MOD**
+- ▶️ Lire des fichiers MOD avec un rendu proche du **ProTracker original**
+- 🕹️ Retrouver l'expérience du workflow Amiga sous Linux
+- ⚙️ Profiter de quelques améliorations modernes tout en conservant l'esprit d'origine
 
 ![Icône ProTracker](protracker.png)
 
-Projet officiel :
+### Projet officiel
 
-[GitHub - 8bitbubsy/pt2-clone](https://github.com/8bitbubsy/pt2-clone)
+🔗 [GitHub — 8bitbubsy / pt2-clone](https://github.com/8bitbubsy/pt2-clone)
+
 ---
-
 # Installation sous Ubuntu
 
 Installer le paquet disponible dans les dépôts :

@@ -1,27 +1,73 @@
-# PNG to bitplane converter online by F4GOH
+# 🕹️ Amiga Tools & Utilities
 
-[PNG to bitplane converter](https://f4goh.github.io/amiga/Utility/gfx/)
+Une sélection d'outils en ligne utiles pour le développement et la création graphique sur **Amiga**.
 
-# ADF-reader online
+---
 
-[ADF-reader](https://f4goh.github.io/amiga/Utility/ADF-reader/)
+## 🎨 PNG to Bitplane Converter — F4GOH
 
+Convertissez facilement des images PNG en données **bitplanes Amiga**.
 
-# Tiled Map Editor
+🔗 [PNG to Bitplane Converter](https://f4goh.github.io/amiga/Utility/gfx/)
 
-[Tiled Map Editor](https://thorbjorn.itch.io/tiled)
+![Icône Bitplane](gfx.png)
 
-![icone Tiled Map Editor](tme.png)
+---
 
-# Amiga Utility online
+## 💾 ADF Reader Online — F4GOH
 
-[Amiga utility](https://dirkwhoffmann.github.io/Moira/docs/Overview/About.html)
+Explorez le contenu des fichiers **ADF (Amiga Disk File)** directement depuis votre navigateur.
 
-# [ADF read online](https://f4goh.github.io/amiga/Utility/ADF-reader/) 
+🔗 [ADF Reader Online](https://f4goh.github.io/amiga/Utility/ADF-reader/)
 
-# Create copper list easy
+![Icône ADF Reader](adf.png)
 
-[gradient-blaster](https://gradient-blaster.grahambates.com)
+---
+
+## 🗺️ Tiled Map Editor
+
+Éditeur de cartes en tuiles (**tile maps**) idéal pour créer des niveaux de jeux 2D.
+
+🔗 [Tiled Map Editor](https://thorbjorn.itch.io/tiled)
+
+![Icône Tiled Map Editor](tme.png)
+
+---
+
+## ⚙️ Amiga Utility Online
+
+Documentation et outils autour de **Moira**, l'émulateur et environnement lié au CPU Motorola 68000.
+
+🔗 [Amiga Utility Online](https://dirkwhoffmann.github.io/Moira/docs/Overview/About.html)
+
+---
+
+## 📀 ADF Reader Online
+
+Accès rapide au lecteur ADF en ligne.
+
+🔗 [ADF Reader](https://f4goh.github.io/amiga/Utility/ADF-reader/)
+
+---
+
+## 🌈 Create Copper Lists Easily
+
+Créez rapidement des **Copper Lists** pour vos effets graphiques Amiga.
+
+🔗 [Gradient Blaster](https://gradient-blaster.grahambates.com)
+
+---
+
+## 📚 Ressources Amiga
+
+| Outil | Utilité |
+|------|---------|
+| PNG → Bitplane | Conversion graphique Amiga |
+| ADF Reader | Lecture d'images disque Amiga |
+| Tiled | Création de cartes 2D |
+| Moira Utilities | Outils CPU 68000 / émulation |
+| Gradient Blaster | Création d'effets Copper |
+
 
 # Amigeconv
 
