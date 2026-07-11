@@ -125,18 +125,36 @@ Avec environ **2,6 millions d'exemplaires vendus**, l'Amiga 500 est le modèle l
 Son architecture matérielle innovante continue d'être étudiée pour comprendre les techniques de programmation bas niveau qui ont marqué l'histoire des jeux vidéo.
 
 
+# Liens divers Amiga
 
-https://thorbjorn.itch.io/tiled
+## Développement & programmation
 
-https://aamatniekss.itch.io/
+- [Stash of Code - Articles Amiga (assembleur 68000, Copper, programmation)](https://www.stashofcode.fr/category/amiga/page/2/)
+  
+  Articles techniques sur la programmation Amiga, notamment le 68000, le Copper et les effets graphiques avancés.
 
-https://craftpix.net
+- [VS Code Amiga Assembly - Extension Visual Studio Code](https://github.com/prb28/vscode-amiga-assembly)
 
-https://www.stashofcode.fr/category/amiga/page/2/
+  Extension VS Code dédiée au développement assembleur Amiga avec outils adaptés au workflow moderne.
 
-https://github.com/prb28/vscode-amiga-assembly/
+---
 
-https://amigamuseum.emu-france.info/Fichiers/ADF/Installation,%20Kickstars,%20Workbench%20Tutorials%20&%20Promotional/
+## Archives & documentation Amiga
+
+- [Amiga Museum - Archives ADF, Kickstart, Workbench, tutoriels et documents](https://amigamuseum.emu-france.info/Fichiers/ADF/Installation,%20Kickstars,%20Workbench%20Tutorials%20%26%20Promotional/)
+
+  Collection d'images disque ADF comprenant des logiciels d'installation, Kickstart, Workbench, tutoriels et documents promotionnels Amiga.
+- [Amiga Museum - FAQ Amiga](https://amigamuseum.emu-france.info/faq.htm)
+
+  Informations générales sur les Kickstart, Workbench, émulation et fichiers Amiga.
+
+---
+
+## Outils & ressources
+
+- [Amiga Museum - Archives ADF complètes](https://amigamuseum.emu-france.info/Fichiers/ADF/)
+
+  Index des archives ADF classées par catégories.
 
 
 
