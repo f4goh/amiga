@@ -26,14 +26,15 @@ extern struct GfxBase *GfxBase;
 extern struct Custom custom;
 
 static UWORD __chip coplist_pal[] = {
-    BPLCON0, 0x0000,
+    //BPLCON0, 0x0000,
+    FMODE,   0,
     DIWSTRT, 0x2C81, DIWSTOP, 0x2CC1, DDFSTRT, 0x0038, DDFSTOP, 0x00D0,
     BPLCON1, 0x0000, BPLCON2, 0x0000, BPL1MOD, 0x0000, BPL2MOD, 0x0000,
 
     BPL1PTH, 0x0000, BPL1PTL, 0x0000,
     BPL2PTH, 0x0000, BPL2PTL, 0x0000,
     BPL3PTH, 0x0000, BPL3PTL, 0x0000,
-    BPL5PTH, 0x0000, BPL4PTL, 0x0000,
+    BPL4PTH, 0x0000, BPL4PTL, 0x0000,
     BPL5PTH, 0x0000, BPL5PTL, 0x0000,
 
     0x2E01, 0xFFFE,
@@ -135,12 +136,11 @@ void affiche(void)
 int main(int argc, char **argv)
 {
     SetTaskPri(FindTask(NULL), TASK_PRIORITY);
-    installPlans();
     BOOL is_pal = init_display();
-    printf("PAL display: %d\n", is_pal);
+    //printf("PAL display: %d\n", is_pal);
     installPlans();
-    printf("%08lx\n", (ULONG)montagne_raw);
-    printf("%lu\n", (unsigned long)sizeof(montagne_raw));
+    //printf("%08lx\n", (ULONG)montagne_raw);
+    //printf("%lu\n", (unsigned long)sizeof(montagne_raw));
     custom.dmacon = 0x7FFF;
     custom.cop1lc = (ULONG)coplist_pal;
     custom.copjmp1 = 0;
