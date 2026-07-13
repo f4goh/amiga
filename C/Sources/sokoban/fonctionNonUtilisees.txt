@@ -1,0 +1,74 @@
+
+void AfficheTileset(void)
+{
+    for (int plan = 0; plan < NB_PLAN; plan++)
+    {
+        UBYTE *src = tileset_raw + plan * (80 * 10);
+
+        UBYTE *dst = ecran + plan * (HAUTEUR_IMAGE * BYTES_PER_LINE);
+
+        for (int y = 0; y < 80; y++)
+        {
+            memcpy(dst + y * BYTES_PER_LINE,src + y * 10,10);
+        }
+    }
+}
+
+
+void cpyBloc(UWORD numBloc, UWORD posx, UWORD posy)
+{
+    UWORD tileX = numBloc % 5;
+    UWORD tileY = numBloc / 5;
+
+    for (int plan = 0; plan < NB_PLAN; plan++)
+    {
+        UWORD *src = (UWORD *)(tileset_raw
+                     + plan * (80 * 10)
+                     + tileY * 16 * 10
+                     + tileX * 2);
+
+        UWORD *dst = (UWORD *)(ecran
+                     + plan * (HAUTEUR_IMAGE * BYTES_PER_LINE)
+                     + posy * 16 * BYTES_PER_LINE
+                     + posx * 2);
+
+        for (int y = 0; y < 16; y++)
+        {
+            *dst = *src;
+
+            src += 5;                  // 10 octets = 5 UWORD
+            dst += BYTES_PER_LINE / 2; // 40 octets = 20 UWORD
+        }
+    }
+}
+
+void AfficheTilesetBlitter(void)
+{
+    for (int plan = 0; plan < NB_PLAN; plan++)
+    {
+        UBYTE *src = tileset_raw + plan * (80 * 10);
+
+        UBYTE *dst = ecran + plan * (HAUTEUR_IMAGE * BYTES_PER_LINE);
+
+        WaitBlit();
+
+        custom.bltcon0 = 0x09F0;   // D = A
+        custom.bltcon1 = 0;
+
+        custom.bltafwm = 0xFFFF;
+        custom.bltalwm = 0xFFFF;
+
+        custom.bltapt = (APTR)src;
+        custom.bltdpt = (APTR)dst;
+
+        custom.bltamod = 0;
+        custom.bltdmod = 30;
+
+        // largeur = 5 mots (10 octets)
+        // hauteur = 80 lignes
+        custom.bltsize = (80 << 6) | 5;
+    }
+}
+
+
+
