@@ -137,6 +137,9 @@ Son architecture matérielle innovante continue d'être étudiée pour comprendr
 
   Extension VS Code dédiée au développement assembleur Amiga avec outils adaptés au workflow moderne.
 
+- [Bumbershoot Software](https://bumbershootsoft.wordpress.com/platform-guide-commodore-amiga/)
+
+
 ---
 
 ## Archives & documentation Amiga
@@ -156,6 +159,7 @@ Son architecture matérielle innovante continue d'être étudiée pour comprendr
 
   Index des archives ADF classées par catégories.
 
+https://amigamuseum.emu-france.info/Fichiers/sites/A500mini/A500mini.htm?fbclid=IwAR2bx44tE1oQLYCGfyKmNJH1B3SqOtHDMnWHaJ0ViwSRRJ4wXuGlGrNlcbg
 
 
 

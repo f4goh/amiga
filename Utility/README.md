@@ -129,3 +129,8 @@ amigeconv -f sprite -t font.png font.spr
 ### For Linux, Mac & Windows:
 
 [Download precompiled binary](https://github.com/tditlu/amigeconv/releases)
+
+## info
+https://github.com/bitplane/amigainfo
+
+

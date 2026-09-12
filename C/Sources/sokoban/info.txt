@@ -1,0 +1,477 @@
+Projet Sokoban Amiga
+====================
+
+L'objectif est de transformer le projet actuel en un moteur modulaire afin que le fichier `main.c` ne contienne plus que l'initialisation du jeu et la boucle principale.
+
+L'idée est de partager toutes les ressources importantes (Copper List, bitplanes, niveaux, sprites, etc.) à travers une structure commune (`GameContext`) transmise à toutes les bibliothèques.
+
+
+Exemple de contexte global
+--------------------------
+
+```c
+typedef struct
+{
+    UWORD *coplist;
+    UBYTE *screen;
+
+    UBYTE level[9][20];
+
+    UWORD playerX;
+    UWORD playerY;
+
+    UWORD currentLevel;
+
+} GameContext;
+```
+
+Toutes les bibliothèques reçoivent un pointeur sur cette structure.
+
+Exemple :
+
+```c
+void PlayerMove(GameContext *ctx);
+```
+
+ou
+
+```c
+void DrawTile(GameContext *ctx,
+              int tile,
+              int x,
+              int y);
+```
+
+
+Arborescence proposée
+---------------------
+
+```
+sokoban/
+│
+├── src/
+│   │
+│   ├── main.c
+│   │
+│   ├── engine/
+│   │   ├── engine.c
+│   │   ├── engine.h
+│   │   ├── display.c
+│   │   ├── display.h
+│   │   ├── copper.c
+│   │   ├── copper.h
+│   │   ├── blitter.c
+│   │   ├── blitter.h
+│   │   ├── sprite.c
+│   │   ├── sprite.h
+│   │   ├── scrolling.c
+│   │   └── scrolling.h
+│   │
+│   ├── game/
+│   │   ├── game.c
+│   │   ├── game.h
+│   │   ├── player.c
+│   │   ├── player.h
+│   │   ├── collision.c
+│   │   ├── collision.h
+│   │   ├── levels.c
+│   │   ├── levels.h
+│   │   ├── menu.c
+│   │   ├── menu.h
+│   │   ├── input.c
+│   │   ├── input.h
+│   │   ├── sound.c
+│   │   ├── sound.h
+│   │   ├── animation.c
+│   │   ├── animation.h
+│   │   ├── timer.c
+│   │   ├── timer.h
+│   │   ├── victory.c
+│   │   └── victory.h
+│   │
+│   ├── data/
+│   │   ├── tileset.c
+│   │   ├── tileset.h
+│   │   ├── sprites.c
+│   │   ├── sprites.h
+│   │   ├── palette.c
+│   │   ├── palette.h
+│   │   ├── levels.c
+│   │   └── levels.h
+│   │
+│   ├── system/
+│   │   ├── context.h
+│   │   ├── amiga.c
+│   │   ├── amiga.h
+│   │   ├── defines.h
+│   │   └── config.h
+│   │
+│   └── Makefile
+│
+└── assets/
+    ├── png/
+    ├── maps/
+    └── sounds/
+```
+
+
+Description des modules
+=======================
+
+engine/
+--------
+
+Contient tout ce qui concerne le matériel Amiga.
+
+### display
+
+Gestion de l'écran.
+
+Fonctions :
+
+- init_display()
+- reset_display()
+- installPlans()
+- WaitTOF()
+
+---
+
+### copper
+
+Gestion de la Copper List.
+
+Fonctions :
+
+- CopperInit()
+- CopperInstall()
+- CopperSetColor()
+- CopperEnableSprites()
+- CopperDisableSprites()
+
+Le reste du programme ne manipule jamais directement la Copper List.
+
+---
+
+### blitter
+
+Toutes les opérations utilisant le Blitter.
+
+Fonctions :
+
+- BlitTile()
+- BlitImage()
+- BlitRect()
+- ClearScreen()
+
+Le code actuel `cpyBlocBlitter()` sera déplacé ici.
+
+---
+
+### sprite
+
+Gestion complète des sprites.
+
+Fonctions :
+
+- SpriteInit()
+- SpriteMove()
+- SpriteShow()
+- SpriteHide()
+- SpriteSetImage()
+
+Le sprite de Nemo sera entièrement géré ici.
+
+---
+
+### scrolling
+
+Gestion du scrolling matériel.
+
+Fonctions :
+
+- ScrollLeft()
+- ScrollRight()
+- ScrollUp()
+- ScrollDown()
+- CenterCamera()
+
+Même si Sokoban n'en a pas besoin aujourd'hui, cela permettra de créer des niveaux plus grands.
+
+
+game/
+------
+
+Contient toute la logique du jeu.
+
+### player
+
+Gestion du joueur.
+
+Fonctions :
+
+- PlayerMoveLeft()
+- PlayerMoveRight()
+- PlayerMoveUp()
+- PlayerMoveDown()
+
+---
+
+### collision
+
+Toute la logique de Sokoban.
+
+Fonctions :
+
+- CanMove()
+- CanPush()
+- MoveBox()
+- CheckCollision()
+- LevelFinished()
+
+C'est le cœur du jeu.
+
+---
+
+### levels
+
+Gestion des niveaux.
+
+Fonctions :
+
+- LoadLevel()
+- RestartLevel()
+- NextLevel()
+- PreviousLevel()
+- DrawLevel()
+
+Le tableau `level[][]` sera déplacé ici.
+
+---
+
+### menu
+
+Gestion du menu.
+
+Fonctions :
+
+- ShowTitle()
+- ShowMenu()
+- SelectLevel()
+- Pause()
+- GameOver()
+
+---
+
+### input
+
+Gestion du clavier et du joystick.
+
+Fonctions :
+
+- ReadKeyboard()
+- ReadJoystick()
+- ReadInput()
+
+Le reste du programme ne saura jamais si l'utilisateur joue au clavier ou au joystick.
+
+---
+
+### sound
+
+Gestion des bruitages.
+
+Fonctions :
+
+- PlayMove()
+- PlayPush()
+- PlayError()
+- PlayVictory()
+
+Plus tard :
+
+- PlayMusic()
+- StopMusic()
+
+---
+
+### animation
+
+Gestion des animations.
+
+Fonctions :
+
+- AnimationStart()
+- AnimationUpdate()
+- AnimationDraw()
+
+Permettra d'animer le joueur, les caisses ou d'ajouter des effets.
+
+---
+
+### timer
+
+Gestion de la synchronisation vidéo.
+
+Fonctions :
+
+- WaitFrame()
+- GetFrame()
+- DelayFrames()
+- FPS()
+
+Toutes les animations pourront être synchronisées sur le VBL.
+
+---
+
+### victory
+
+Gestion de la fin de niveau.
+
+Fonctions :
+
+- CheckLevelFinished()
+- VictoryAnimation()
+- NextLevel()
+
+
+data/
+------
+
+Toutes les données du jeu.
+
+Contient uniquement :
+
+- tileset
+- sprites
+- palettes
+- niveaux
+- sons
+
+Aucune logique ne doit être présente dans ce répertoire.
+
+
+system/
+--------
+
+Contient les définitions globales du moteur.
+
+Le fichier le plus important est :
+
+```
+context.h
+```
+
+qui contient la structure :
+
+```c
+typedef struct
+{
+    UWORD *coplist;
+
+    UBYTE *screen;
+
+    UWORD screenWidth;
+
+    UWORD screenHeight;
+
+    UBYTE currentLevel;
+
+    UBYTE playerX;
+    UBYTE playerY;
+
+} GameContext;
+```
+
+Toutes les bibliothèques utilisent cette structure pour accéder aux ressources du moteur.
+
+
+sokoban/
+│
+├── src/
+│
+│── main.c
+│
+├── engine/
+│   ├── engine.h
+│   ├── engine.c
+│   ├── display.h
+│   ├── display.c
+│   ├── copper.h
+│   ├── copper.c
+│   ├── blitter.h
+│   ├── blitter.c
+│   ├── sprite.h
+│   ├── sprite.c
+│   ├── scrolling.h
+│   └── scrolling.c
+│
+├── game/
+│   ├── game.h
+│   ├── game.c
+│   ├── player.h
+│   ├── player.c
+│   ├── collision.h
+│   ├── collision.c
+│   ├── levels.h
+│   ├── levels.c
+│   ├── menu.h
+│   ├── menu.c
+│   ├── input.h
+│   ├── input.c
+│   ├── sound.h
+│   ├── sound.c
+│   ├── animation.h
+│   ├── animation.c
+│   ├── timer.h
+│   ├── timer.c
+│   ├── victory.h
+│   └── victory.c
+│
+├── data/
+│   ├── tileset.h
+│   ├── tileset.c
+│   ├── sprites.h
+│   ├── sprites.c
+│   ├── palette.h
+│   ├── palette.c
+│   ├── levels.h
+│   └── levels.c
+│
+└── system/
+    ├── context.h
+    ├── defines.h
+    └── config.h
+
+
+Le main()
+==========
+
+Avec cette architecture, le fichier `main.c` devient extrêmement simple :
+
+```c
+int main(void)
+{
+    GameContext ctx;
+
+    EngineInit(&ctx);
+
+    MenuShow(&ctx);
+
+    LevelLoad(&ctx,0);
+
+    while(GameRunning(&ctx))
+    {
+        InputUpdate(&ctx);
+        PlayerUpdate(&ctx);
+        AnimationUpdate(&ctx);
+        SoundUpdate(&ctx);
+        RenderFrame(&ctx);
+    }
+
+    EngineShutdown(&ctx);
+
+    return 0;
+}
+```
+
+Le `main()` ne contient plus aucune logique graphique ou de jeu. Toute la complexité est répartie dans des modules spécialisés, ce qui rend le projet beaucoup plus facile à maintenir, à faire évoluer et à réutiliser pour d'autres jeux Amiga.
