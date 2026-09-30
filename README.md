@@ -161,5 +161,46 @@ Son architecture matérielle innovante continue d'être étudiée pour comprendr
 
 https://amigamuseum.emu-france.info/Fichiers/sites/A500mini/A500mini.htm?fbclid=IwAR2bx44tE1oQLYCGfyKmNJH1B3SqOtHDMnWHaJ0ViwSRRJ4wXuGlGrNlcbg
 
+## Blue workbench
+
+**Old Blue Workbench** est un remplacement de Workbench pour les Amiga fonctionnant avec **Kickstart 1.3**.
+
+Développé par **Mats Eirik Hansen**.
+
+## Fonctionnalités
+
+- Menus améliorés, similaires à ceux de Workbench 2.0.
+- Fenêtres Workbench et fenêtres de tiroirs améliorées avec prise en charge de :
+  - Menu **Window** et menu **Icon** comme menus contextuels.
+  - Sélection multiple d'icônes avec un lasso.
+  - Icônes par défaut permettant d'afficher tous les fichiers et tiroirs.
+  - Organisation des icônes par nom ou par type.
+  - Arrière-plans et polices configurables.
+  - Couper, copier et coller des fichiers, tiroirs et disques.
+- Fenêtres de navigation pour parcourir le système de fichiers avec :
+  - Barre latérale optionnelle.
+  - Filtrage par nom.
+  - Tri par nom et par type.
+- Fenêtres **Info** améliorées avec :
+  - Modification des icônes.
+  - Inversion de leurs couleurs.
+- Menus personnalisés définis par l'utilisateur.
+- Docks avec prise en charge du glisser-déposer des icônes.
+- Possibilité de lancer des outils automatiquement au démarrage.
+- Raccourcis clavier globaux personnalisables pour la gestion des fenêtres et d'autres fonctions.
+
+## Compatibilité
+
+- **Amiga**
+- **Kickstart 1.3**
+
+## Auteur
+
+**Mats Eirik Hansen**
+
+## Page officielle / téléchargement
+
+https://matshansen.itch.io/old-blue-workbench
+
 
 
