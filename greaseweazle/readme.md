@@ -125,6 +125,8 @@ Use --force to update anyway.
 
 > 💡 **Câblage :** Utilisez une nappe de lecteur disquette standard avec une section croisée pour configurer par défaut le lecteur en tant que Disque A.
 
+![Board](images/cable.jpg)
+
 ### A. Test de la vitesse de rotation (`gw rpm`)
 Mesure la vitesse du moteur du lecteur :
 ```bash
